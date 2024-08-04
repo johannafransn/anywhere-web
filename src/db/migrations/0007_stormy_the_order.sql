@@ -6,6 +6,14 @@ CREATE TABLE IF NOT EXISTS "frame" (
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "guest" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" varchar(256) NOT NULL,
+	"email" varchar(256) NOT NULL,
+	"created_at" timestamp DEFAULT now(),
+	CONSTRAINT "guest_email_unique" UNIQUE("email")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "meetup" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
@@ -14,15 +22,15 @@ CREATE TABLE IF NOT EXISTS "meetup" (
 	"escrow_address" varchar(256) NOT NULL,
 	"created_by" integer,
 	"created_at" timestamp DEFAULT now(),
-	"date" timestamp
+	"date" timestamp,
+	"country" varchar(100),
+	"city" varchar(100)
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"fid" integer NOT NULL,
 	"wallet_address" varchar(256) NOT NULL,
 	"created_at" timestamp DEFAULT now(),
-	CONSTRAINT "user_fid_unique" UNIQUE("fid"),
 	CONSTRAINT "user_wallet_address_unique" UNIQUE("wallet_address")
 );
 --> statement-breakpoint

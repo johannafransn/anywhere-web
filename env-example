@@ -11,3 +11,11 @@ POSTGRES_URL=
 BLOB_READ_WRITE_TOKEN=
 RPC_URL=
 OPERATOR_MNEMONIC=
+
+//For local postgres
+POSTGRES_HOST=localhost:5432
+POSTGRES_USER=anywhere_xyz
+POSTGRES_PASSWORD=password_here
+POSTGRES_DATABASE=anywhere_xyz
+POSTGRES_URL=postgresql://anywhere_xyz:password_here@localhost:5432/anywhere_xyz
+

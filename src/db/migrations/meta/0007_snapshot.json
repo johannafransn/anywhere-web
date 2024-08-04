@@ -1,5 +1,5 @@
 {
-  "id": "3af33e31-cfeb-40dc-860f-c74016576b7d",
+  "id": "d049088f-055b-49fb-afe2-f7cf86bdf050",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -59,6 +59,49 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "guest": {
+      "name": "guest",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "guest_email_unique": {
+          "name": "guest_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
     "meetup": {
       "name": "meetup",
       "schema": "",
@@ -106,9 +149,21 @@
           "notNull": false,
           "default": "now()"
         },
-        "expires_at": {
-          "name": "expires_at",
+        "date": {
+          "name": "date",
           "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country": {
+          "name": "country",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         }
@@ -142,12 +197,6 @@
           "primaryKey": true,
           "notNull": true
         },
-        "fid": {
-          "name": "fid",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
         "wallet_address": {
           "name": "wallet_address",
           "type": "varchar(256)",
@@ -166,13 +215,6 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "user_fid_unique": {
-          "name": "user_fid_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "fid"
-          ]
-        },
         "user_wallet_address_unique": {
           "name": "user_wallet_address_unique",
           "nullsNotDistinct": false,
