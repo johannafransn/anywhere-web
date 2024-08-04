@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key */
+/*  
 import { Button } from "frames.js/next";
 import { frames } from "./frames";
 import { findFrameBySlug } from "@/utils/frame";
@@ -249,3 +249,20 @@ const handleRequest = frames(async (ctx) => {
 
 export const GET = handleRequest;
 export const POST = handleRequest;
+ */
+
+import { db, meetup } from "@/db";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    const meetups = await db.select().from(meetup);
+    return NextResponse.json(meetups);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

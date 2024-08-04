@@ -1,4 +1,4 @@
-//This route is for calling the mint() function, which is either the
+/* //This route is for calling the mint() function, which is either the
 //second transaction for erc20 mints, or the first and only transaction for ETH mints
 
 import { TransactionTargetResponse } from "frames.js";
@@ -84,4 +84,21 @@ export async function POST(
       value: mintTx.value.toString(),
     },
   });
+}
+ */
+
+import { db, meetup } from "@/db";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    const meetups = await db.select().from(meetup);
+    return NextResponse.json(meetups);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }

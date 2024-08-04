@@ -1,4 +1,4 @@
-import { TransactionTargetResponse } from "frames.js";
+/* import { TransactionTargetResponse } from "frames.js";
 import { getFrameMessage } from "frames.js/next/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -68,4 +68,21 @@ export async function POST(
       value: premintTx.value.toString(),
     },
   });
+}
+ */
+
+import { db, meetup } from "@/db";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    const meetups = await db.select().from(meetup);
+    return NextResponse.json(meetups);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
