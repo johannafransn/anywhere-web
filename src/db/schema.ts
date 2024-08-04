@@ -30,6 +30,8 @@ export const guest = pgTable("guest", {
   name: varchar("name", { length: 256 }).notNull(),
   email: varchar("email", { length: 256 }).notNull().unique(),
   createdAt: timestamp("created_at").defaultNow(),
+  meetupId: integer("meetup_id").references(() => meetup.id),
+  userId: integer("user_id").references(() => user.id),
 });
 
 export const frame = pgTable("frame", {

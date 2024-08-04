@@ -57,6 +57,13 @@
       "when": 1722763929002,
       "tag": "0007_stormy_the_order",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1722782301861,
+      "tag": "0008_luxuriant_winter_soldier",
+      "breakpoints": true
     }
   ]
 }

@@ -2,28 +2,30 @@ import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
 import { useState, useEffect } from "react";
 
-export function useGetMeetupsByUserId() {
-  //TODO fix types
-  const [userMeetups, setUserMeetups] = useState<any | null>(null);
+export function useGetUserMeetupsByUserId(isPastEvents: boolean) {
+  const [meetups, setMeetups] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!userMeetups) {
-          setLoading(true);
-          const _meetups = await ApiService.getMeetupsByUserId(Auth.id);
-          setUserMeetups(_meetups);
-          setLoading(false);
-        }
+        setLoading(true);
+        const userId = Auth.id;
+        const _meetups = await ApiService.getMeetupsByUserId(
+          userId,
+          isPastEvents
+        );
+        setMeetups(_meetups);
+        setLoading(false);
       } catch (error) {
-        console.log(error, "Error fetching the meetups for userId:" + Auth.id);
+        console.log(error, "Error fetching the meetups");
+        setLoading(false);
       }
     };
     fetchData();
-  }, [userMeetups]);
+  }, [isPastEvents]);
 
-  return { userMeetups, loading, setUserMeetups };
+  return { meetups, loading, setMeetups };
 }
 
-export default useGetMeetupsByUserId;
+export default useGetUserMeetupsByUserId;

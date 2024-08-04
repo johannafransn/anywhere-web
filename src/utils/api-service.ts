@@ -11,8 +11,10 @@ export const ApiService = {
     return data;
   },
 
-  getMeetupsByUserId: async function (userId: string) {
-    const { data } = await axios.get(`/api/meetup/${userId}`);
+  getMeetupsByUserId: async function (userId: string, isPastEvents: boolean) {
+    const { data } = await axios.get(
+      `/api/meetup/${userId}?isPastEvents=${isPastEvents}`
+    );
     return data;
   },
 

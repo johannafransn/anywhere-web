@@ -1,4 +1,4 @@
-import { db, meetup } from "@/db";
+import { db, meetup, guest } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -16,22 +16,33 @@ export async function POST(request: NextRequest) {
 
     //const escrowAddress = callFactoryAndCreateEscrow();
     const escrowAddress = "0x1234567890";
-    // Find the user by their wallet address
 
-    // Create the meetup
-    const newMeetup = await db
-      .insert(meetup)
-      .values({
-        name,
-        description,
-        image,
-        escrowAddress,
-        createdBy: creatorUserId,
-        date: new Date(date),
-      })
-      .returning();
+    // Create the meetup and add the creator as a guest in a transaction
+    const result = await db.transaction(async (tx) => {
+      const [newMeetup] = await tx
+        .insert(meetup)
+        .values({
+          name,
+          description,
+          image,
+          escrowAddress,
+          createdBy: creatorUserId,
+          date: new Date(date),
+        })
+        .returning();
 
-    return NextResponse.json(newMeetup[0]);
+      // Add the creator as a guest
+      await tx.insert(guest).values({
+        name: "Creator", // TODO we might want to replace this with actual user-name
+        email: "creator@example.com", // Hardcoded email for now since user table doesnt have email atm
+        meetupId: newMeetup.id,
+        userId: creatorUserId,
+      });
+
+      return newMeetup;
+    });
+
+    return NextResponse.json(result);
   } catch (error) {
     console.error(error);
     return NextResponse.json(

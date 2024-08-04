@@ -1,5 +1,5 @@
 {
-  "id": "d049088f-055b-49fb-afe2-f7cf86bdf050",
+  "id": "362ade58-e840-4516-ab62-a38f50ad5130",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -87,10 +87,49 @@
           "primaryKey": false,
           "notNull": false,
           "default": "now()"
+        },
+        "meetup_id": {
+          "name": "meetup_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "guest_meetup_id_meetup_id_fk": {
+          "name": "guest_meetup_id_meetup_id_fk",
+          "tableFrom": "guest",
+          "tableTo": "meetup",
+          "columnsFrom": [
+            "meetup_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "guest_user_id_user_id_fk": {
+          "name": "guest_user_id_user_id_fk",
+          "tableFrom": "guest",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "guest_email_unique": {

@@ -37,9 +37,15 @@ const Navbar = () => {
           Anywhere
         </a>
       </div>
-      <div className="flex items-center flex-row">
+      <div className="flex justify-between  flex-row">
         {" "}
-        <p>Y How It Works</p> <p> Discover</p>
+        <a className="mr-3" href="/">
+          How It Works
+        </a>
+        <a className="mr-3" href="/meetups">
+          Meetups
+        </a>{" "}
+        <a href="/dashboard"> Discover</a>
       </div>
       {userSession ? (
         <div className="flex items-center flex-row">
