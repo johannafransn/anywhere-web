@@ -18,18 +18,26 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col w-full md:w-4/5">
       <div className="flex flex-col text-center justify-center text-lg">
-        <div className="mt-2 mb-3" role="status">
+        <div className="inline-flex w-[180px] rounded-md bg-gray-200">
           <button
-            onClick={() => router.push("/create-meetup")}
-            className="bg-purple-600 text-white px-4 py-2 rounded-md mr-4"
+            onClick={() => setIsPastEvents(false)}
+            className={`px-4 py-2 rounded-l-md transition-colors duration-200 ${
+              !isPastEvents
+                ? "bg-gray-400 text-white"
+                : "text-gray-700 hover:bg-gray-300"
+            }`}
           >
-            Create a meetup
+            Upcoming
           </button>
           <button
-            onClick={() => setIsPastEvents(!isPastEvents)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            onClick={() => setIsPastEvents(true)}
+            className={`px-4 py-2 rounded-r-md transition-colors duration-200 ${
+              isPastEvents
+                ? "bg-gray-400 text-white"
+                : "text-gray-700 hover:bg-gray-300"
+            }`}
           >
-            {isPastEvents ? "Show Upcoming" : "Show Past"}
+            Past
           </button>
         </div>
         <h2>{isPastEvents ? "Past Meetups" : "Upcoming Meetups"}</h2>
