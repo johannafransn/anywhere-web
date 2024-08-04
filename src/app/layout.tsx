@@ -25,20 +25,7 @@ export default function RootLayout({
         <Web3ModalProvider initialState={initialState}>
           <main className="flex flex-col px-12 py-2">
             <Navbar />
-            <div className="mt-12">
-              <h2
-                className="text-center font-bold text-7xl leading-normal tracking-tight uppercase mb-3"
-                style={{ fontSize: 30, lineHeight: 1 }}
-              >
-                Anywhere.xyz
-              </h2>
-              <h4 className="text-center font-bold text-xl leading-normal tracking-tight uppercase">
-                Crowdsource your next meetup
-              </h4>
-              <p className="mt-3 text-center mb-5">
-                Create and share a meetup. Everyone can join and earn.
-              </p>
-            </div>
+
             <div className="flex mt-8 justify-center items-center">
               {children}
             </div>

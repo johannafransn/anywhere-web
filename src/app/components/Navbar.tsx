@@ -20,7 +20,7 @@ const Navbar = () => {
   }, [userSession]);
 
   return (
-    <nav className="flex justify-between pt-4">
+    <nav className="flex justify-between pt-4 mb-24">
       <div className="flex justify-between text-lg w-100 space-x-4">
         <a className="flex flex-row text-[40px]" href="/">
           <svg
@@ -49,6 +49,9 @@ const Navbar = () => {
       </div>
       {userSession ? (
         <div className="flex items-center flex-row">
+          <a className="mr-1" href="/create-meetup">
+            Propose a Meetup
+          </a>
           <button className="mr-3" onClick={handleSignout}>
             Sign Out user: #{Auth.id}
           </button>
