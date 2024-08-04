@@ -26,7 +26,6 @@ const CopyFrameModal: React.FC<ModalProps> = (props) => {
     setCastText("");
     onClose();
   };
-  console.log({ frameData });
 
   const handleCastTextChange = (e: FormEvent<HTMLTextAreaElement>) => {
     setCastText(e.currentTarget.value || "");

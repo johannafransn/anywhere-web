@@ -35,7 +35,6 @@ export default function Dashboard() {
         date: new Date(date).toISOString(),
       };
 
-      console.log(meetupData, "MEETUP DATA");
       await ApiService.createMeetup({ meetup: meetupData });
 
       // Reset form and show success message
@@ -52,7 +51,6 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-  console.log(name, description, image, date);
 
   return (
     <div className="flex flex-col w-full md:w-4/5 ">

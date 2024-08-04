@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
-    console.log(req, "MEETUP REQ");
     const { name, description, image, date, creatorUserId } = req.meetup;
 
     // Validate required fields

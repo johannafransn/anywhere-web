@@ -5,32 +5,30 @@ import { Auth } from "@/utils/cookie-auth";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useRouter } from "next/navigation";
 import { useAccount, useAccountEffect } from "wagmi";
-import LoginButton from "./components/LoginButton";
 
-export default function Home() {
+export default function LoginButton() {
   const { open } = useWeb3Modal();
   const router = useRouter();
 
   useAccountEffect({
     async onConnect(data) {
       console.log("Connected!", data);
-
       const user = await ApiService.authenticateUser({ address: data.address });
       Auth.setUser(user.id);
       router.push("/dashboard");
     },
     onDisconnect() {
-      /* const cookie = new Cookies()
-				cookie.remove('addresso') */
-      //removeAccessTokenCookie()
-      //router.push('/')
+      //TODO: Handle removal of cookies etc
       console.log("Disconnected");
     },
   });
 
   return (
-    <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
-      <LoginButton />
-    </div>
+    <button
+      onClick={() => open()}
+      className="p-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
+    >
+      Create Account
+    </button>
   );
 }

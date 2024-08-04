@@ -10,7 +10,6 @@ export default function Dashboard() {
   const router = useRouter();
   const [frames, setFrames] = useState<any[]>([]);
   const { userMeetups, loading } = useGetAllMeetups();
-  console.log(userMeetups, "usermeetups");
   useEffect(() => {}, []);
 
   const frameUrl = process.env.NEXT_PUBLIC_SERVER_URL + "frames-transaction/";
