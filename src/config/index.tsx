@@ -8,9 +8,9 @@ export const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID;
 if (!projectId) throw new Error("Project ID is not defined");
 
 export const metadata = {
-  name: "Web3Modal",
-  description: "Web3Modal Example",
-  url: process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000/", // origin must match your domain & subdomain
+  name: "Anywhere.xyz",
+  description: "Meet Anywhere",
+  url: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/", // origin must match your domain & subdomain
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 

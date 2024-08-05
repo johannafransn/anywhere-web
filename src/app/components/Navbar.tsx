@@ -55,7 +55,7 @@ const Navbar = () => {
           <button className="mr-3" onClick={handleSignout}>
             Sign Out user: #{Auth.id}
           </button>
-          <a href="/profile">My profile</a>
+          <a href={`/profile/${Auth.id}`}>My profile</a>
         </div>
       ) : (
         <LoginButton />
