@@ -33,7 +33,17 @@ CREATE TABLE IF NOT EXISTS "user" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"wallet_address" varchar(256) NOT NULL,
 	"created_at" timestamp DEFAULT now(),
-	CONSTRAINT "user_wallet_address_unique" UNIQUE("wallet_address")
+	"email" varchar(256),
+	"name" varchar(256),
+	"username" varchar(100),
+	"bio" varchar(556),
+	"instagram" varchar(100),
+	"farcaster" varchar(100),
+	"twitter" varchar(100),
+	"youtube" varchar(100),
+	"avatar" varchar(512),
+	CONSTRAINT "user_wallet_address_unique" UNIQUE("wallet_address"),
+	CONSTRAINT "user_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint
 DO $$ BEGIN

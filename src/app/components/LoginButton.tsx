@@ -13,13 +13,12 @@ export default function LoginButton() {
   useAccountEffect({
     async onConnect(data) {
       console.log("Connected!", data);
-      const user = await ApiService.authenticateUser({ address: data.address });
-      Auth.setUser(user.id);
-      router.push("/dashboard");
+
+      router.push(`/onboard/${data.address}`);
     },
     onDisconnect() {
-      //TODO: Handle removal of cookies etc
       console.log("Disconnected");
+      Auth.removeUser();
     },
   });
 
