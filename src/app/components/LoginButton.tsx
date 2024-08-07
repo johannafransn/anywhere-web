@@ -14,7 +14,15 @@ export default function LoginButton() {
     async onConnect(data) {
       console.log("Connected!", data);
 
-      router.push(`/onboard/${data.address}`);
+      const existingUser = await ApiService.getUserByWalletAddress(
+        data.address
+      );
+      console.log(existingUser, "exist user?");
+      if (existingUser) {
+        router.push(`/profile/${existingUser.id}`);
+      } else {
+        router.push(`/onboard/${data.address}`);
+      }
     },
     onDisconnect() {
       console.log("Disconnected");

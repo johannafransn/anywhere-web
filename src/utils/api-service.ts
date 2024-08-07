@@ -11,6 +11,11 @@ export const ApiService = {
     return data;
   },
 
+  getUserByWalletAddress: async function (walletAddress: string) {
+    const { data } = await axios.get(`/api/user/wallet/${walletAddress}`);
+    return data;
+  },
+
   getMeetups: async function () {
     const { data } = await axios.get(`/api/meetup/`);
     return data;

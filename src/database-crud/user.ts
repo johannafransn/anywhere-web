@@ -13,7 +13,7 @@ export const findUserById = async (id: number) => {
   }
 };
 
-export const findUserByAddress = async (walletAddress: number) => {
+export const findUserByAddress = async (walletAddress: string) => {
   const existingUser = await db
     .select()
     .from(user)

@@ -24,7 +24,11 @@ export default function Home() {
           Create and share a meetup. Everyone can join and earn.
         </p>
         <p>
-          User info: {user?.id} {user?.walletAddress}
+          User info: {user?.walletAddress}
+          <br></br>
+          {user?.name}
+          <br></br>
+          {user?.email}
         </p>
       </div>
     </div>
