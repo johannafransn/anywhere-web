@@ -1,10 +1,13 @@
 "use client";
+import useGetUserById from "@/hooks/useGetUserById";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+  const { user, loading, error } = useGetUserById();
 
+  console.log(user, "User profile");
   return (
     <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
       <div className="mt-12">
@@ -19,6 +22,9 @@ export default function Home() {
         </h4>
         <p className="mt-3 text-center mb-5">
           Create and share a meetup. Everyone can join and earn.
+        </p>
+        <p>
+          User info: {user?.id} {user?.walletAddress}
         </p>
       </div>
     </div>

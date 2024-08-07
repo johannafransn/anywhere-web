@@ -6,6 +6,11 @@ export const ApiService = {
     return data;
   },
 
+  getUserById: async function (userId: string) {
+    const { data } = await axios.get(`/api/user/${userId}`);
+    return data;
+  },
+
   getMeetups: async function () {
     const { data } = await axios.get(`/api/meetup/`);
     return data;
