@@ -18,7 +18,7 @@ export function useGetUserById() {
 
       try {
         setLoading(true);
-        const _user = await ApiService.getUserById(userId);
+        const _user = await ApiService.getUserById(userId as string);
         setUser(_user);
         setError(null);
       } catch (error) {

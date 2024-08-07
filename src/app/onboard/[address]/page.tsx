@@ -5,10 +5,13 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { uploadImageToImgBB } from "@/utils/img-bb-upload";
 import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export default function Onboard() {
   const router = useRouter();
   const params = useParams();
+  const { userSession, updateUserSession } = useUserSession();
+
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -78,6 +81,7 @@ export default function Onboard() {
 
       const user = await ApiService.authenticateUser(userData);
       Auth.setUser(user.id);
+      updateUserSession(true);
       alert("Profile updated successfully!");
       router.push("/dashboard");
     } catch (error) {

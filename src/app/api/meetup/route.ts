@@ -33,8 +33,6 @@ export async function POST(request: NextRequest) {
 
       // Add the creator as a guest
       await tx.insert(guest).values({
-        name: "Creator", // TODO we might want to replace this with actual user-name
-        email: "creator@example.com", // Hardcoded email for now since user table doesnt have email atm
         meetupId: newMeetup.id,
         userId: creatorUserId,
       });

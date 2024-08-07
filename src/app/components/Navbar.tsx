@@ -1,23 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Auth } from "@/utils/cookie-auth";
 import { useDisconnect } from "wagmi";
 import LoginButton from "./LoginButton";
+import { useUserSession } from "@/hooks/useUserSession";
 
 const Navbar = () => {
-  const [userSession, setUserSession] = useState(false);
+  const { userSession, updateUserSession } = useUserSession();
   const { disconnect } = useDisconnect();
   const handleSignout = () => {
     disconnect();
     Auth.removeUser();
+    updateUserSession(false);
     window.location.href = "/";
   };
-  useEffect(() => {
-    if (Auth.id) {
-      setUserSession(true);
-    }
-  }, [userSession]);
 
   return (
     <nav className="flex justify-between pt-4 mb-24">
