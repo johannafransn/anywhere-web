@@ -8,26 +8,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'montserrat': ['Montserrat'],
-        'lato': ['Lato'],
-        'garamond': ['Garamond'],
-        'body': ['Montserrat'],
+      colors: {
+        black: "#010101",
+        "black-opacity": {
+          10: "rgba(1, 1, 1, 0.1)",
+          20: "rgba(1, 1, 1, 0.2)",
+          30: "rgba(1, 1, 1, 0.3)",
+          40: "rgba(1, 1, 1, 0.4)",
+          50: "rgba(1, 1, 1, 0.5)",
+          60: "rgba(1, 1, 1, 0.6)",
+          70: "rgba(1, 1, 1, 0.7)",
+          80: "rgba(1, 1, 1, 0.8)",
+          90: "rgba(1, 1, 1, 0.9)",
+        },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      fontWeight: {
-        100: "extrathin",
-        200: "thin",
-        300: "light",
-
-      },
-
-
-
     },
   },
   plugins: [],

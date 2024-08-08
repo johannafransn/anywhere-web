@@ -33,7 +33,7 @@ export default function LoginButton() {
   return (
     <button
       onClick={() => open()}
-      className="p-2 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:bg-gray-300"
+      className="py-2 px-5 bg-black-opacity-80 text-white font-light rounded hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
     >
       Create Account
     </button>

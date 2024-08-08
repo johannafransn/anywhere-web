@@ -8,22 +8,19 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
-      <div className="mt-12">
-        <h2
-          className="text-center font-bold text-7xl leading-normal tracking-tight uppercase mb-3"
-          style={{ fontSize: 30, lineHeight: 1 }}
-        >
-          Anywhere.xyz
-        </h2>
-        <h4 className="text-center font-bold text-xl leading-normal tracking-tight uppercase">
-          Crowdsource your next meetup
+    <div className="relative flex flex-col w-full">
+      <div className="flex">
+        <h4 className=" font-normal text-8xl mr-2 w-4/5">
+          Crowdsource your next in-person meetup
         </h4>
-        <p className="mt-3 text-center mb-5">
-          Create and share a meetup. Everyone can join and earn.
-        </p>
+        <div className="mt-7">
+          <p className="text-lgfont-light mb-3">
+            Get paid to host IRL meetups and let your guests earn by bringing a
+            friend.
+          </p>
+          <LoginButton />
+        </div>
       </div>
-      <LoginButton />
     </div>
   );
 }

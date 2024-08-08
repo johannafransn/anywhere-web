@@ -21,14 +21,11 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie"));
   return (
     <html lang="en">
-      <body>
+      <body className="tracking-tight">
         <Web3ModalProvider initialState={initialState}>
           <main className="flex flex-col px-12 py-2">
             <Navbar />
-
-            <div className="flex mt-8 justify-center items-center">
-              {children}
-            </div>
+            <div className="py-9">{children}</div>
           </main>
           {/*         <Footer></Footer> */}
           <ToastContainer />
