@@ -158,7 +158,6 @@ export default function Onboard() {
         </div>
 
         {/* Social links */}
-
         <div className="flex flex-col">
           <label htmlFor="links" className="block">
             Social links
