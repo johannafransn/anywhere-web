@@ -11,10 +11,16 @@ import {
   LuShieldQuestion,
   LuTicket,
 } from "react-icons/lu";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import useGetUserById from "@/hooks/useGetUserById";
 
 const Navbar = () => {
   const { userSession, updateUserSession } = useUserSession();
+  const { user } = useGetUserById();
+  console.log(user, "user");
   const { address, isConnected } = useAccount();
+  const pathname = usePathname();
 
   const { disconnect } = useDisconnect();
   const handleSignout = () => {
@@ -28,49 +34,53 @@ const Navbar = () => {
     console.log(userSession, "userSession");
   }, [userSession]);
 
-  console.log(userSession, "userSession");
+  const linkClass = (href: string) =>
+    `flex items-center gap-2 transition ease-in-out hover:text-black ${
+      pathname === href ? "text-gray-700" : "text-black-opacity-50"
+    }`;
 
   return (
     <nav className="flex justify-between pt-4">
       <div className="flex justify-between text-lg w-100 space-x-4">
-        <a className="flex flex-row text-xl items-center gap-2" href="/">
+        <Link href="/" className="flex flex-row text-xl items-center gap-2">
           <LuMapPin />
           Anywhere
-        </a>
+        </Link>
       </div>
-      <div className="flex justify-between flex-row font-light text-black-opacity-50 items-center gap-5">
-        {" "}
-        <a
-          className="flex items-center gap-2 transition ease-in-out hover:text-black"
-          href="/"
-        >
+      <div className="flex justify-between flex-row font-light items-center gap-5">
+        <Link href="/" className={linkClass("/")}>
           <LuFileQuestion />
           How It Works
-        </a>
-        <a
-          className="flex items-center gap-2 transition ease-in-out hover:text-black"
-          href="/meetups"
-        >
+        </Link>
+        <Link href="/meetups" className={linkClass("/meetups")}>
           <LuTicket />
           Meetups
-        </a>{" "}
-        <a
-          className="transition ease-in-out hover:text-black"
-          href="/dashboard"
-        >
-          {" "}
+        </Link>
+        <Link href="/dashboard" className={linkClass("/dashboard")}>
           Discover
-        </a>
+        </Link>
       </div>
       {userSession || isConnected ? (
         <div className="flex items-center flex-row">
-          <a className="mr-1" href="/create-meetup">
-            Propose a Meetup
-          </a>
+          <Link href="/create-meetup" className="mr-1">
+            Propose a Meetup |
+          </Link>
           <button className="mr-3" onClick={handleSignout}>
-            Sign Out user: #{Auth.id}
+            Sign Out
           </button>
-          <a href={`/profile/${Auth.id}`}>My profile</a>
+          <Link href={`/profile/${Auth.id}`}>
+            <div className="w-10 h-10 ml-5 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+              {user ? (
+                <img
+                  src={user.avatar}
+                  alt="Avatar"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-500">Photo</span>
+              )}
+            </div>
+          </Link>
         </div>
       ) : (
         <LoginButton />

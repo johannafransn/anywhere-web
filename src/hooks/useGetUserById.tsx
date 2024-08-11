@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ApiService } from "@/utils/api-service";
+import { Auth } from "@/utils/cookie-auth";
 
 export function useGetUserById() {
   const [user, setUser] = useState<any | null>(null);
@@ -10,10 +11,9 @@ export function useGetUserById() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userId = params.userId;
+      let userId = params.userId;
       if (!userId) {
-        setError("User ID not found in URL");
-        return;
+        userId = Auth.id;
       }
 
       try {

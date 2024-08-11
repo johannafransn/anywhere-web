@@ -64,3 +64,16 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+input:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+/* Optional: If you want to add a custom focus style */
+input:focus,
+textarea:focus {
+  border: 1px solid gray !important;
+}
