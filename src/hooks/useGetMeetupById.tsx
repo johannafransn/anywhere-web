@@ -18,7 +18,7 @@ export function useGetMeetupById() {
 
       try {
         setLoading(true);
-        const _user = await ApiService.getUserById(userId as string);
+        const _user = await ApiService.getMeetupById(userId as string);
         setMeetup(_user);
         setError(null);
       } catch (error) {

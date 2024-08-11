@@ -13,19 +13,17 @@ export const ApiService = {
   },
 
   getMeetupById: async function (meetupId: string) {
-    const { data } = await axios.get(`/meetup/${meetupId}`);
+    const { data } = await axios.get(`/meetup/${meetupId}?userId=${Auth.id}`);
     return data;
   },
 
   getUserByWalletAddress: async function (walletAddress: string) {
-    console.log(`/api/user/wallet/${walletAddress}`, "request URL");
     const { data } = await axios.get(`/api/user/wallet/${walletAddress}`);
     return data;
   },
 
   getMeetups: async function () {
-    const userId = Auth.id;
-    const { data } = await axios.get(`/api/meetup?userId=${userId}`);
+    const { data } = await axios.get(`/api/meetup?userId=${Auth.id}`);
     return data;
   },
   getMeetupsByUserId: async function (userId: string, isPastEvents: boolean) {
