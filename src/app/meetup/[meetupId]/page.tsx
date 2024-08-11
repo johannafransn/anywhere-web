@@ -1,9 +1,10 @@
 "use client";
 
 import CreatorSidebar from "@/app/components/CreatorSidebar";
+import ReserveSpot from "@/app/components/ReserveSpot";
 import useGetMeetupById from "@/hooks/useGetMeetupById";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { LuMapPin } from "react-icons/lu";
 
 /* TODO:
 
@@ -26,8 +27,22 @@ export default function Meetup() {
   return (
     <div className="flex flex-col w-full md:w-4/5  max-w-lg mx-auto ">
       <div className="flex flex-col  text-lg">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
           {meetup && <CreatorSidebar meetup={meetup} />}
+          <div className="flex flex-col">
+            {meetup && <p className="text-[40px]">{meetup.meetup.name}</p>}
+            <div className="mt-4">
+              <p>{meetup.meetup.date}</p>
+              <div className="flex flex-row mt-4">
+                {" "}
+                <LuMapPin />{" "}
+                <p className="-mt-1  ml-2">
+                  {meetup.meetup.city}, {meetup.meetup.country}
+                </p>
+              </div>
+            </div>
+            {meetup && <ReserveSpot meetupId={meetup.meetup.id} />}
+          </div>
         </div>
       </div>
     </div>

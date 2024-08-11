@@ -9,7 +9,7 @@ export default function CreatorSidebar(props: any) {
   console.log(meetup, "what smeetup?");
 
   return (
-    <div className="flex flex-col  ">
+    <div className="flex flex-col mr-12 ">
       <img
         className="rounded-lg w-[200px] h-[200px] mx-auto object-cover shadow-md shadow-gray-400 dark:shadow-gray-400"
         src={meetup.meetup.image}
