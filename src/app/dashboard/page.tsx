@@ -6,32 +6,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const userMeetups = [
-  {
-    id: 1,
-    name: "Jojos Meetup",
-    description: "The best meetup in town",
-    image: "",
-    date: "12 August 2024, 12:30PM",
-    country: "Mexico",
-    city: "Tulum",
-  },
-  {
-    id: 1,
-    name: "Jojos Meetup",
-    description: "The best meetup in town",
-    image: "",
-    date: "12 August 2024, 12:30PM",
-    country: "Mexico",
-    city: "Tulum",
-  },
-];
-
 export default function Dashboard() {
   const router = useRouter();
   const [frames, setFrames] = useState<any[]>([]);
-  /*   const { userMeetups, loading } = useGetAllMeetups();
-   */ useEffect(() => {}, []);
+  const { meetups, loading } = useGetAllMeetups();
+
+  console.log(meetups, "meetups? AA");
+  useEffect(() => {}, []);
 
   return (
     <div className="flex flex-col w-full md:w-4/5">
@@ -45,15 +26,40 @@ export default function Dashboard() {
           </button>
         </div>
         Here is a dashboard with all meetups available
-        {userMeetups?.length > 0 ? (
-          userMeetups?.map((meetup: any) => (
-            <div className="flex flex-col col-span-2" key={meetup.id}>
-              hej
-            </div>
-          ))
-        ) : (
-          <div>No meetups available</div>
-        )}
+        <div className="flex flex-col space-y-4 p-2">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {meetups?.length ? (
+              meetups.map((meetup: any, index: number) => (
+                <div
+                  onClick={() => router.push(`/meetup/${meetup.meetup.id}`)}
+                  key={index}
+                  className="h-auto max-w-full rounded-lg text-grey p-3 bg-zinc-300"
+                >
+                  <img
+                    className="h-auto max-w-full rounded-lg mb-2"
+                    src={meetup.meetup.image}
+                    alt={meetup.meetup.name}
+                  />
+                  <h4 className="text-l font-semibold">{meetup.meetup.name}</h4>
+                  <p className="text-xs font-bold">{meetup.meetup.country}</p>
+                  <p className="text-xs">{meetup.meetup.description}</p>
+                  <p className="text-xs">
+                    Proposed by: {meetup.creator.name}
+                    <div className="w-5 h-5 ml-1 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={meetup.creator.avatar}
+                        alt="Avatar"
+                        className="w-full h-full object-cover"
+                      />{" "}
+                    </div>
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No results found...</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
-import { db, meetup, guest } from "@/db";
+import { db, meetup, guest, user } from "@/db";
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -52,8 +53,23 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const meetups = await db.select().from(meetup);
-    return NextResponse.json(meetups);
+    const meetupsWithCreators = await db
+      .select({
+        meetup: meetup,
+        creator: {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          avatar: user.avatar,
+          farcaster: user.farcaster,
+          twitter: user.twitter,
+          instagram: user.instagram,
+        },
+      })
+      .from(meetup)
+      .leftJoin(user, eq(meetup.createdBy, user.id));
+
+    return NextResponse.json(meetupsWithCreators);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
