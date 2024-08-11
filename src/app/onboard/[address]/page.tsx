@@ -96,7 +96,7 @@ export default function Onboard() {
       Auth.setUser(user.id);
       updateUserSession(true);
       alert("Profile updated successfully!");
-      router.push("/dashboard");
+      router.push("/discover");
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to create profile. Please try again.");

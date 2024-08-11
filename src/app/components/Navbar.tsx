@@ -56,7 +56,7 @@ const Navbar = () => {
           <LuTicket />
           Meetups
         </Link>
-        <Link href="/dashboard" className={linkClass("/dashboard")}>
+        <Link href="/discover" className={linkClass("/discover")}>
           Discover
         </Link>
       </div>
