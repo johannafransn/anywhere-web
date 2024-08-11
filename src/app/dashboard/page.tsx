@@ -6,25 +6,33 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+const userMeetups = [
+  {
+    id: 1,
+    name: "Jojos Meetup",
+    description: "The best meetup in town",
+    image: "",
+    date: "12 August 2024, 12:30PM",
+    country: "Mexico",
+    city: "Tulum",
+  },
+  {
+    id: 1,
+    name: "Jojos Meetup",
+    description: "The best meetup in town",
+    image: "",
+    date: "12 August 2024, 12:30PM",
+    country: "Mexico",
+    city: "Tulum",
+  },
+];
+
 export default function Dashboard() {
   const router = useRouter();
   const [frames, setFrames] = useState<any[]>([]);
-  const { userMeetups, loading } = useGetAllMeetups();
-  useEffect(() => {}, []);
+  /*   const { userMeetups, loading } = useGetAllMeetups();
+   */ useEffect(() => {}, []);
 
-  const frameUrl = process.env.NEXT_PUBLIC_SERVER_URL + "frames-transaction/";
-
-  const handleCopyClick = (text: string) => {
-    navigator.clipboard
-      .writeText(frameUrl + text)
-      .then(() => {
-        toast("Success! Link was copied.");
-      })
-      .catch((error) => {
-        console.error("Failed to copy text: ", error);
-        toast("Copying the link failed. Try again.");
-      });
-  };
   return (
     <div className="flex flex-col w-full md:w-4/5">
       <div className="flex flex-col text-center justify-center text-lg">
@@ -39,8 +47,21 @@ export default function Dashboard() {
         Here is a dashboard with all meetups available
         {userMeetups?.length > 0 ? (
           userMeetups?.map((meetup: any) => (
-            <div
-              className="grid grid-cols-3 gap-2 text-black mt-3"
+            <div className="flex flex-col col-span-2" key={meetup.id}>
+              hej
+            </div>
+          ))
+        ) : (
+          <div>No meetups available</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+{
+  /*    <div
+              className="grid grid-rows-3 gap-2 text-black mt-3"
               key={meetup.id}
             >
               <div className="relative">
@@ -57,12 +78,5 @@ export default function Dashboard() {
                   Date: {new Date(meetup.date).toLocaleDateString()}
                 </p>
               </div>
-            </div>
-          ))
-        ) : (
-          <div>No meetups available</div>
-        )}
-      </div>
-    </div>
-  );
+            </div> */
 }

@@ -97,90 +97,169 @@ export default function Onboard() {
   useEffect(() => {}, [userSession]);
 
   return (
-    <div className="flex flex-col w-full md:w-4/5 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Complete Your Profile</h1>
+    <div className="flex flex-col w-full md:w-4/5 max-w-lg mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Create Your Profile</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex justify-center mb-4">
-          <label htmlFor="avatar" className="cursor-pointer">
-            <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt="Avatar"
-                  className="w-full h-full object-cover"
+        <div className="flex flex-col mb-0">
+          <div className="flex  flex-row mb-4">
+            <div className="flex flex-col">
+              <label htmlFor="name" className="block mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-[240px] p-2 border rounded-lg text-black"
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+              )}
+              <div className="mt-5">
+                <label htmlFor="username" className="block mb-1">
+                  Username
+                </label>
+                <input
+                  type="username"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  className="w-full p-2 border rounded-lg text-black"
                 />
-              ) : (
-                <span className="text-gray-500">Upload Photo</span>
+                {errors.username && (
+                  <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+                )}
+              </div>
+            </div>
+            <label
+              htmlFor="avatar"
+              className="cursor-pointer flex flex-col items-center justify-center"
+            >
+              <p className="ml-12 mb-4">Profile Picture</p>
+              <div className="w-32 h-32 ml-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt="Avatar"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-500">Upload Photo</span>
+                )}
+              </div>
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+          </div>
+        </div>
+
+        {/* Social links */}
+        <div className="flex flex-col">
+          <label htmlFor="links" className="block">
+            Social links
+          </label>
+          <div className="flex flex-row justify-between">
+            <div className="mt-5">
+              <input
+                placeholder="farcaster"
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full p-2 border rounded-lg text-black"
+              />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
               )}
             </div>
-          </label>
-          <input
-            type="file"
-            id="avatar"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="username" className="block mb-1">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.username && (
-            <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="name" className="block mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="block mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-          )}
+            <div className="mt-5">
+              <input
+                placeholder="x.com"
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full p-2 border rounded-lg text-black"
+              />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+              )}
+            </div>
+          </div>{" "}
+          <div className="flex flex-row justify-between">
+            <div className="mt-5">
+              <input
+                placeholder="instagram"
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full p-2 border rounded-lg text-black"
+              />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+              )}
+            </div>
+            <div className="mt-5">
+              <input
+                placeholder="youtube"
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full p-2 border rounded-lg text-black"
+              />
+              {errors.username && (
+                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+              )}
+            </div>
+          </div>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
+          className="mt-4 mb-4 w-[150px] p-2 bg-black text-white rounded-lg hover:bg-gray-700 disabled:bg-gray-500"
         >
-          {loading ? "Updating..." : "Complete Profile"}
+          {loading ? "Creating..." : "Create Profile"}
         </button>
+
+        <label htmlFor="email" className="block mb-1 text-2xl">
+          Email Address
+        </label>
+        <div className="bg-slate-100 w-full rounded-lg border border-gray-400  p-4">
+          <p className="flex flex-row">
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className=" p-2 border rounded-lg text-black"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
+            <div className="bg-white text-gray-500 p-1 rounded-lg text-xs text-bold ml-3 mb-2">
+              Primary
+            </div>
+          </p>
+          <p className="text-gray-400">
+            This email will be shared with hosts when you register for meetups.
+          </p>
+        </div>
       </form>
     </div>
   );
