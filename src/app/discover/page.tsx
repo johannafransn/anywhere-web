@@ -54,7 +54,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="text-xs flex flex-row">
-                    {meetup.isGuest ? "Confirmed" : "Not signed up yet"}
+                    {meetup?.isGuest ? "Confirmed" : "Not signed up yet"}
                   </div>
                 </div>
               ))
