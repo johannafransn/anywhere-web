@@ -3,8 +3,8 @@ import { useParams } from "next/navigation";
 import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
 
-export function useGetUserById() {
-  const [user, setUser] = useState<any | null>(null);
+export function useGetMeetupById() {
+  const [meetup, setMeetup] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const params = useParams();
@@ -18,12 +18,12 @@ export function useGetUserById() {
 
       try {
         setLoading(true);
-        const _user = await ApiService.getUserById(userId as string);
-        setUser(_user);
+        const _user = await ApiService.getMeetupById(userId as string);
+        setMeetup(_user);
         setError(null);
       } catch (error) {
-        console.error("Error fetching user:", error);
-        setError("Failed to fetch user data");
+        console.error("Error fetching meetup with id:", params.userId, error);
+        setError("Failed to fetch meetup data");
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ export function useGetUserById() {
     fetchData();
   }, [params.userId]);
 
-  return { user, loading, error, setUser };
+  return { meetup, loading, error, setMeetup };
 }
 
-export default useGetUserById;
+export default useGetMeetupById;

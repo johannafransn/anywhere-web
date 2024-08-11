@@ -6,7 +6,18 @@ import { eq } from "drizzle-orm";
 export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
-    const { walletAddress, username, name, email, avatar } = req;
+    const {
+      walletAddress,
+      username,
+      name,
+      email,
+      avatar,
+      bio,
+      farcaster,
+      instagram,
+      twitter,
+      youtube,
+    } = req;
 
     if (!walletAddress) {
       return NextResponse.json(
@@ -26,6 +37,11 @@ export async function POST(request: NextRequest) {
           name: name || existingUser.name,
           email: email || existingUser.email,
           avatar: avatar || existingUser.avatar,
+          bio: bio || existingUser.bio,
+          farcaster: farcaster || existingUser.farcaster,
+          instagram: instagram || existingUser.instagram,
+          twitter: twitter || existingUser.twitter,
+          youtube: youtube || existingUser.youtube,
         })
         .where(eq(user.id, existingUser.id))
         .returning();
@@ -41,6 +57,11 @@ export async function POST(request: NextRequest) {
           name,
           email,
           avatar,
+          bio,
+          farcaster,
+          instagram,
+          twitter,
+          youtube,
         })
         .returning();
 

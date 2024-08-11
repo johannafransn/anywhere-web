@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   ) {
     const session = request.cookies.get(USER_ID)?.value;
     if (session && request.nextUrl.pathname === "/") {
-      return Response.redirect(new URL("/dashboard", request.url));
+      return Response.redirect(new URL("/discover", request.url));
     }
 
     if (!session && request.nextUrl.pathname !== "/") {

@@ -23,7 +23,7 @@ export function useGetAllMeetups() {
     fetchData();
   }, [meetups]);
 
-  return { userMeetups: meetups, loading, setMeetups };
+  return { meetups, loading, setMeetups };
 }
 
 export default useGetAllMeetups;

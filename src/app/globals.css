@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -26,9 +26,9 @@ body {
   height: 100%;
   padding: 0 !important;
   margin: 0 !important;
-  color: black;
-  background: white;
-  font-family: "Montserrat", sans-serif;
+  color: #101010;
+  background: #fcfcfc;
+  font-family: "Inter", sans-serif;
 }
 
 @layer utilities {
@@ -63,4 +63,17 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+input:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+/* Optional: If you want to add a custom focus style */
+input:focus,
+textarea:focus {
+  border: 1px solid gray !important;
 }

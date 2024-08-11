@@ -29,6 +29,8 @@ export default function Dashboard() {
       // Create meetup
       const meetupData = {
         name,
+        city,
+        country,
         description,
         image: imageUrl,
         creatorUserId: Auth.id,
@@ -43,7 +45,7 @@ export default function Dashboard() {
       setImage(null);
       setDate("");
       alert("Meetup created successfully!");
-      router.push("/dashboard");
+      router.push("/discover");
     } catch (error) {
       console.error("Error creating meetup:", error);
       alert("Failed to create meetup. Please try again.");

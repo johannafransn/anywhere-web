@@ -1,22 +1,30 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { uploadImageToImgBB } from "@/utils/img-bb-upload";
 import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
 import { useUserSession } from "@/hooks/useUserSession";
+import { useDisconnect } from "wagmi";
 
 export default function Onboard() {
   const router = useRouter();
   const params = useParams();
   const { userSession, updateUserSession } = useUserSession();
+  const { disconnect } = useDisconnect();
 
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [farcaster, setFarcaster] = useState("");
+  const [xcom, setXcom] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [youtube, setYoutube] = useState("");
+
   const [errors, setErrors] = useState({
     username: "",
     name: "",
@@ -45,8 +53,6 @@ export default function Onboard() {
     setErrors(newErrors);
     return isValid;
   };
-
-  console.log(params, "params in onboard");
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -77,20 +83,29 @@ export default function Onboard() {
         email,
         avatar: avatar || undefined,
         walletAddress: params.address,
+        bio: bio,
+        instagram,
+        farcaster,
+        twitter: xcom,
+        youtube,
       };
+
+      console.log(userData, "userdata", params);
 
       const user = await ApiService.authenticateUser(userData);
       Auth.setUser(user.id);
       updateUserSession(true);
       alert("Profile updated successfully!");
-      router.push("/dashboard");
+      router.push("/discover");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      alert("Failed to create profile. Please try again.");
+      disconnect();
     } finally {
       setLoading(false);
     }
   };
+  useEffect(() => {}, [userSession]);
 
   return (
     <div className="flex flex-col w-full md:w-4/5 max-w-lg mx-auto">
@@ -157,6 +172,17 @@ export default function Onboard() {
           </div>
         </div>
 
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Your message
+        </label>
+        <textarea
+          id="message"
+          className="block p-2.5 w-full text-sm text-gray-9000 bg-white rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500  "
+          placeholder="Write your bio here..."
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+        ></textarea>
+
         {/* Social links */}
         <div className="flex flex-col">
           <label htmlFor="links" className="block">
@@ -166,60 +192,44 @@ export default function Onboard() {
             <div className="mt-5">
               <input
                 placeholder="farcaster"
-                type="username"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+                type="text"
+                id="farcaster"
+                value={farcaster}
+                onChange={(e) => setFarcaster(e.target.value)}
                 className="w-full p-2 border rounded-lg text-black"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-              )}
             </div>
             <div className="mt-5">
               <input
                 placeholder="x.com"
-                type="username"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+                type="text"
+                id="xcom"
+                value={xcom}
+                onChange={(e) => setXcom(e.target.value)}
                 className="w-full p-2 border rounded-lg text-black"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-              )}
             </div>
-          </div>{" "}
+          </div>
           <div className="flex flex-row justify-between">
             <div className="mt-5">
               <input
                 placeholder="instagram"
-                type="username"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+                type="text"
+                id="instagram"
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
                 className="w-full p-2 border rounded-lg text-black"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-              )}
             </div>
             <div className="mt-5">
               <input
                 placeholder="youtube"
-                type="username"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+                type="text"
+                id="youtube"
+                value={youtube}
+                onChange={(e) => setYoutube(e.target.value)}
                 className="w-full p-2 border rounded-lg text-black"
               />
-              {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username}</p>
-              )}
             </div>
           </div>
         </div>
