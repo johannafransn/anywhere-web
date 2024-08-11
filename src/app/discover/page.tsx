@@ -43,8 +43,8 @@ export default function Dashboard() {
                   <h4 className="text-l font-semibold">{meetup.meetup.name}</h4>
                   <p className="text-xs font-bold">{meetup.meetup.country}</p>
                   <p className="text-xs">{meetup.meetup.description}</p>
-                  <p className="text-xs">
-                    Proposed by: {meetup.creator.name}
+                  <div className="text-xs flex flex-row">
+                    Creator: {meetup.creator.name}
                     <div className="w-5 h-5 ml-1 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                       <img
                         src={meetup.creator.avatar}
@@ -52,7 +52,10 @@ export default function Dashboard() {
                         className="w-full h-full object-cover"
                       />{" "}
                     </div>
-                  </p>
+                  </div>
+                  <div className="text-xs flex flex-row">
+                    {meetup.isGuest ? "Confirmed" : "Not signed up yet"}
+                  </div>
                 </div>
               ))
             ) : (

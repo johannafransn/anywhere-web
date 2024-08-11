@@ -1,5 +1,5 @@
 import { db, meetup, guest, user } from "@/db";
-import { eq } from "drizzle-orm";
+import { and, eq, exists } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -51,9 +51,19 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const meetupsWithCreators = await db
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "UserId is required" },
+        { status: 400 }
+      );
+    }
+
+    const meetupsWithCreatorsAndGuestStatus = await db
       .select({
         meetup: meetup,
         creator: {
@@ -65,11 +75,22 @@ export async function GET() {
           twitter: user.twitter,
           instagram: user.instagram,
         },
+        isGuest: exists(
+          db
+            .select()
+            .from(guest)
+            .where(and(eq(guest.meetupId, meetup.id), eq(guest.userId, userId)))
+        ),
       })
       .from(meetup)
       .leftJoin(user, eq(meetup.createdBy, user.id));
 
-    return NextResponse.json(meetupsWithCreators);
+    console.log(
+      meetupsWithCreatorsAndGuestStatus,
+      "MEETUPS WITH CREATORS AND GUEST STATUS"
+    );
+
+    return NextResponse.json(meetupsWithCreatorsAndGuestStatus);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
