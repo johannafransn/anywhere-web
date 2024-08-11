@@ -13,7 +13,11 @@ export const ApiService = {
   },
 
   getMeetupById: async function (meetupId: string) {
-    const { data } = await axios.get(`/meetup/${meetupId}?userId=${Auth.id}`);
+    console.log(`/meetup-get-by-id/${meetupId}?userId=${Auth.id}`, "url");
+    const { data } = await axios.get(
+      `/api/meetup-get-by-id/${meetupId}?userId=${Auth.id}`
+    );
+    console.log(data, "DATA ÖÖÖÖ");
     return data;
   },
 
@@ -23,18 +27,20 @@ export const ApiService = {
   },
 
   getMeetups: async function () {
-    const { data } = await axios.get(`/api/meetup?userId=${Auth.id}`);
+    const { data } = await axios.get(
+      `/api/meetup-create-get?userId=${Auth.id}`
+    );
     return data;
   },
   getMeetupsByUserId: async function (userId: string, isPastEvents: boolean) {
     const { data } = await axios.get(
-      `/api/meetup/${userId}?isPastEvents=${isPastEvents}`
+      `/api/meetup-get-by-userid/${userId}?isPastEvents=${isPastEvents}`
     );
     return data;
   },
 
   createMeetup: async function (meetup: any) {
-    const { data } = await axios.post(`/api/meetup`, meetup);
+    const { data } = await axios.post(`/api/meetup-create-get`, meetup);
     return data;
   },
 };

@@ -11,18 +11,18 @@ export function useGetMeetupById() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let userId = params.userId;
-      if (!userId) {
-        userId = Auth.id;
+      let meetupId = params.meetupId;
+      if (!meetupId) {
+        throw Error("No meetupId provided");
       }
 
       try {
         setLoading(true);
-        const _user = await ApiService.getMeetupById(userId as string);
-        setMeetup(_user);
+        const _meetup = await ApiService.getMeetupById(meetupId as string);
+        setMeetup(_meetup);
         setError(null);
       } catch (error) {
-        console.error("Error fetching meetup with id:", params.userId, error);
+        console.error("Error fetching meetup with id:", meetupId, error);
         setError("Failed to fetch meetup data");
       } finally {
         setLoading(false);

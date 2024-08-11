@@ -1,5 +1,7 @@
 "use client";
 
+import CreatorSidebar from "@/app/components/CreatorSidebar";
+import useGetMeetupById from "@/hooks/useGetMeetupById";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -15,14 +17,17 @@ Handle 'reserve spot' logic, create endpoint for where Auth.id is added to the m
 
 */
 
-export default function Dashboard() {
+export default function Meetup() {
   const router = useRouter();
+  const { meetup, loading } = useGetMeetupById();
+
+  console.log(meetup, "what smeetup?");
 
   return (
-    <div className="flex flex-col w-full md:w-4/5 ">
-      <div className="flex flex-col text-center justify-center text-lg">
+    <div className="flex flex-col w-full md:w-4/5  max-w-lg mx-auto ">
+      <div className="flex flex-col  text-lg">
         <div className="flex flex-row justify-between">
-          <p className="text-[30px] ">Meetup Details</p>
+          {meetup && <CreatorSidebar meetup={meetup} />}
         </div>
       </div>
     </div>
