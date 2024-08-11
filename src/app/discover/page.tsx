@@ -11,7 +11,6 @@ export default function Dashboard() {
   const [frames, setFrames] = useState<any[]>([]);
   const { meetups, loading } = useGetAllMeetups();
 
-  console.log(meetups, "meetups? AA");
   useEffect(() => {}, []);
 
   return (

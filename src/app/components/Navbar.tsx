@@ -18,7 +18,6 @@ import useGetUserById from "@/hooks/useGetUserById";
 const Navbar = () => {
   const { userSession, updateUserSession } = useUserSession();
   const { user } = useGetUserById();
-  console.log(user, "user");
   const { address, isConnected } = useAccount();
   const pathname = usePathname();
 
@@ -30,9 +29,7 @@ const Navbar = () => {
     disconnect();
   };
 
-  useEffect(() => {
-    console.log(userSession, "userSession");
-  }, [userSession]);
+  useEffect(() => {}, [userSession]);
 
   const linkClass = (href: string) =>
     `flex items-center gap-2 transition ease-in-out hover:text-black ${

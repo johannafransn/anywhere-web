@@ -39,7 +39,7 @@
     "universal-cookie": "^7.1.4",
     "uuid": "^9.0.1",
     "viem": "^2.18.7",
-    "wagmi": "1.4.3"
+    "wagmi": "^2.12.5"
   },
   "devDependencies": {
     "@types/node": "^20.12.2",

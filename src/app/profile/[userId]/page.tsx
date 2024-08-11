@@ -7,7 +7,6 @@ export default function Home() {
   const router = useRouter();
   const { user, loading, error } = useGetUserById();
 
-  console.log(user, "User profile");
   return (
     <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
       <div className="mt-12">

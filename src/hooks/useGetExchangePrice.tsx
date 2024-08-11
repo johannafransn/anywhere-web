@@ -18,7 +18,6 @@ export function useGetExchangePrice(currencyId: string | undefined) {
             `https://api.coingecko.com/api/v3/simple/price?ids=${currencyId}&vs_currencies=eth`
           );
           const data = await response.json();
-          console.log("OOOO");
 
           if (data[currencyId]) {
             setExchangePriceInCurrency(data[currencyId].eth);

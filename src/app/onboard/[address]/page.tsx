@@ -90,8 +90,6 @@ export default function Onboard() {
         youtube,
       };
 
-      console.log(userData, "userdata", params);
-
       const user = await ApiService.authenticateUser(userData);
       Auth.setUser(user.id);
       updateUserSession(true);
