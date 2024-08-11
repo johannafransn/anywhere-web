@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Auth } from "@/utils/cookie-auth";
-import { useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import LoginButton from "./LoginButton";
 import { useUserSession } from "@/hooks/useUserSession";
 import {
@@ -14,13 +14,21 @@ import {
 
 const Navbar = () => {
   const { userSession, updateUserSession } = useUserSession();
+  const { address, isConnected } = useAccount();
+
   const { disconnect } = useDisconnect();
   const handleSignout = () => {
-    disconnect();
     Auth.removeUser();
     updateUserSession(false);
     window.location.href = "/";
+    disconnect();
   };
+
+  useEffect(() => {
+    console.log(userSession, "userSession");
+  }, [userSession]);
+
+  console.log(userSession, "userSession");
 
   return (
     <nav className="flex justify-between pt-4">
@@ -54,7 +62,7 @@ const Navbar = () => {
           Discover
         </a>
       </div>
-      {userSession ? (
+      {userSession || isConnected ? (
         <div className="flex items-center flex-row">
           <a className="mr-1" href="/create-meetup">
             Propose a Meetup

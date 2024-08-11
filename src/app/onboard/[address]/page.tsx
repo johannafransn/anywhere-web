@@ -1,16 +1,18 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { uploadImageToImgBB } from "@/utils/img-bb-upload";
 import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
 import { useUserSession } from "@/hooks/useUserSession";
+import { useDisconnect } from "wagmi";
 
 export default function Onboard() {
   const router = useRouter();
   const params = useParams();
   const { userSession, updateUserSession } = useUserSession();
+  const { disconnect } = useDisconnect();
 
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
@@ -86,11 +88,13 @@ export default function Onboard() {
       router.push("/dashboard");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      alert("Failed to create profile. Please try again.");
+      disconnect();
     } finally {
       setLoading(false);
     }
   };
+  useEffect(() => {}, [userSession]);
 
   return (
     <div className="flex flex-col w-full md:w-4/5 max-w-md mx-auto">

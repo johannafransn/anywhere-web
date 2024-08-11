@@ -1,18 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useUserSession } from "@/hooks/useUserSession";
 import { ApiService } from "@/utils/api-service";
+import { useAccountEffect, useDisconnect } from "wagmi";
+import { useUserSession } from "./useUserSession";
 import { Auth } from "@/utils/cookie-auth";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAccount, useAccountEffect, useDisconnect } from "wagmi";
 
-export default function LoginButton() {
-  const { open } = useWeb3Modal();
-  const router = useRouter();
-  const { disconnect } = useDisconnect();
+export function useAccountConnector() {
   const { updateUserSession, userSession } = useUserSession();
+  const { disconnect } = useDisconnect();
+  const router = useRouter();
 
   useAccountEffect({
     async onConnect(data) {
@@ -40,15 +36,4 @@ export default function LoginButton() {
       Auth.removeUser();
     },
   });
-
-  useEffect(() => {}, [userSession]);
-
-  return (
-    <button
-      onClick={() => open()}
-      className="py-2 px-5 bg-black-opacity-80 text-white font-light rounded hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
-    >
-      Create Account
-    </button>
-  );
 }
