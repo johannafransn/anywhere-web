@@ -15,6 +15,7 @@ export function useAccountConnector() {
       console.log("Connected!", data);
 
       try {
+        console.log(data.address, "data address 1");
         const existingUser = await ApiService.getUserByWalletAddress(
           data.address
         );

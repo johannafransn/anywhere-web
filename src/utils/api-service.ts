@@ -22,6 +22,7 @@ export const ApiService = {
   },
 
   getUserByWalletAddress: async function (walletAddress: string) {
+    console.log(`/api/user/wallet/${walletAddress}`, "url heej");
     const { data } = await axios.get(`/api/user/wallet/${walletAddress}`);
     return data;
   },

@@ -43,7 +43,7 @@ export default function Dashboard() {
       // Create meetup
       const meetupData = {
         name,
-        city,
+    location,
         country,
         description,
         image: imageUrl,

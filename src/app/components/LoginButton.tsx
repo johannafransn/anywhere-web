@@ -19,6 +19,8 @@ export default function LoginButton() {
       console.log("Connected!", data);
 
       try {
+        console.log(data.address, "data address 2");
+
         const existingUser = await ApiService.getUserByWalletAddress(
           data.address
         );

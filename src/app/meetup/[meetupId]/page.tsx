@@ -32,12 +32,12 @@ export default function Meetup() {
           <div className="flex flex-col">
             {meetup && <p className="text-[40px]">{meetup.meetup.name}</p>}
             <div className="mt-4">
-              <p>{meetup.meetup.date}</p>
+              <p>{meetup?.meetup.date}</p>
               <div className="flex flex-row mt-4">
                 {" "}
                 <LuMapPin />{" "}
                 <p className="-mt-1  ml-2">
-                  {meetup.meetup.city}, {meetup.meetup.country}
+                  {meetup?.meetup.city}, {meetup?.meetup.country}
                 </p>
               </div>
             </div>
