@@ -30,6 +30,55 @@ const eventEscrowAbi = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newAdmin",
+        type: "address",
+      },
+    ],
+    name: "changeAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "requiredAmount",
+        type: "uint256",
+      },
+    ],
+    name: "createEvent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "organizer",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
+    ],
+    name: "depositEscrow",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -92,30 +141,29 @@ const eventEscrowAbi = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "admin",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         internalType: "address",
-        name: "newAdmin",
+        name: "organizer",
         type: "address",
       },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "eventId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "requiredAmount",
+        type: "uint256",
+      },
     ],
-    name: "changeAdmin",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    name: "EventCreated",
+    type: "event",
   },
   {
     inputs: [
@@ -129,10 +177,28 @@ const eventEscrowAbi = [
         name: "eventId",
         type: "uint256",
       },
+      {
+        internalType: "address",
+        name: "attendee",
+        type: "address",
+      },
     ],
-    name: "depositEscrow",
+    name: "releaseEscrow",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "admin",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -163,6 +229,35 @@ const eventEscrowAbi = [
       {
         internalType: "bool",
         name: "released",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "events",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "requiredAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "exists",
         type: "bool",
       },
     ],
@@ -215,15 +310,21 @@ const eventEscrowAbi = [
         name: "eventId",
         type: "uint256",
       },
+    ],
+    name: "getEventDetails",
+    outputs: [
       {
-        internalType: "address",
-        name: "attendee",
-        type: "address",
+        internalType: "uint256",
+        name: "requiredAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "exists",
+        type: "bool",
       },
     ],
-    name: "releaseEscrow",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

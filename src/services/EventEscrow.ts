@@ -26,6 +26,8 @@ export class EventEscrow extends ViemService {
     });
   }
 
+  // ADMIN
+
   public async changeAdmin(newAdmin: Hex) {
     const tokenContract = await this.getTokenContract(this.serverClient);
 
@@ -56,19 +58,7 @@ export class EventEscrow extends ViemService {
     return tokenContract.read.admin();
   }
 
-  public async getEventEscrowDetails(
-    organizer: Hex,
-    eventId: number | string,
-    attendee: Hex
-  ) {
-    const formattedEventId = parseEther(String(eventId));
-    const tokenContract = await this.getTokenContract();
-    return tokenContract.read.getEscrowDetails([
-      organizer,
-      formattedEventId,
-      attendee,
-    ]);
-  }
+  // ACTION
 
   public async releaseEscrow(
     organizer: Hex,
@@ -105,7 +95,7 @@ export class EventEscrow extends ViemService {
     eventId: number | string,
     amount: number | string
   ) {
-    const tokenContract = await this.getTokenContract(this.serverClient);
+    const tokenContract = await this.getTokenContract(this.walletClient);
     const formattedEventId = parseEther(String(eventId));
     const formattedAmount = parseEther(String(amount));
 
@@ -134,5 +124,57 @@ export class EventEscrow extends ViemService {
     } catch (error) {
       console.error(`Error depositing escrow: ${error}`);
     }
+  }
+
+  public async createEvent(
+    eventId: number | string,
+    amountReqToAttend: number | string
+  ) {
+    const tokenContract = await this.getTokenContract(this.serverClient);
+    const formattedEventId = parseEther(String(eventId));
+    const formattedAmountReqToAttend = parseEther(String(amountReqToAttend));
+
+    try {
+      const { request } = await this.publicClient.simulateContract({
+        ...tokenContract,
+        functionName: "createEvent",
+        args: [formattedEventId, formattedAmountReqToAttend],
+      });
+
+      const hash = await this.walletClient.writeContract({
+        ...request,
+        account: this.serverAccount,
+      });
+
+      const receipt = await this.publicClient.waitForTransactionReceipt({
+        hash,
+      });
+
+      return receipt;
+    } catch (error) {
+      console.error(`Error creating event: ${error}`);
+    }
+  }
+
+  // INFO
+
+  public async getEscrowDetails(
+    organizer: Hex,
+    eventId: number | string,
+    attendee: Hex
+  ) {
+    const formattedEventId = parseEther(String(eventId));
+    const tokenContract = await this.getTokenContract();
+    return tokenContract.read.getEscrowDetails([
+      organizer,
+      formattedEventId,
+      attendee,
+    ]);
+  }
+
+  public async getEventDetails(organizer: Hex, eventId: number | string) {
+    const formattedEventId = parseEther(String(eventId));
+    const tokenContract = await this.getTokenContract();
+    return tokenContract.read.getEventDetails([organizer, formattedEventId]);
   }
 }
