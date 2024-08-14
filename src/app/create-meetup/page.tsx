@@ -5,8 +5,16 @@ import { uploadImageToImgBB } from "@/utils/img-bb-upload";
 import { ApiService } from "@/utils/api-service";
 import { Auth } from "@/utils/cookie-auth";
 import Image from "next/image";
-import { MdOutlineSpeakerNotes } from "react-icons/md";
-import { FaCircle, FaRegCircle } from "react-icons/fa";
+import { MdOutlineSpeakerNotes, MdPeople } from "react-icons/md";
+import {
+  FaChevronDown,
+  FaCircle,
+  FaEdit,
+  FaMapMarkerAlt,
+  FaRegCircle,
+  FaTicketAlt,
+} from "react-icons/fa";
+import { CiGlobe } from "react-icons/ci";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -14,7 +22,6 @@ export default function Dashboard() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -132,6 +139,29 @@ export default function Dashboard() {
 
         {/* The rest of the form */}
         <div className="flex flex-col gap-3">
+          {/* Top part
+          TODO: Make those arrows clickable
+          */}
+          <div className="flex  mb-2 items-center justify-between">
+            <div className="flex p-2 bg-gray-200 gap-2 w-2/5 h-10 items-center rounded-xl justify-center">
+              <Image
+                src="/pfp.png"
+                width={25}
+                height={25}
+                alt="pfp"
+                className="rounded-2xl"
+              />
+              <p className="text-black-opacity-60">girl.eth</p>
+              <FaChevronDown className="text-black-opacity-60" />
+            </div>
+
+            <div className="flex py-2 px-4 bg-gray-200 gap-2 h-10 items-center rounded-xl justify-center">
+              <CiGlobe />
+              <p className="text-black-opacity-60">Public</p>
+
+              <FaChevronDown className="text-black-opacity-60" />
+            </div>
+          </div>
           <input
             type="text"
             id="name"
@@ -177,7 +207,7 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* Time fields */}
+            {/* TODO: Fix time and date hehe */}
             <div className="flex flex-col gap-1 w-16">
               <input
                 type="time"
@@ -198,6 +228,48 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* TODO: Add autofill address here*/}
+          <div className="relative full">
+            <label htmlFor="country" className="hidden">
+              Country
+            </label>
+            <input
+              type="text"
+              id="country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              required
+              placeholder="Add Event Location"
+              className="w-full p-2 pl-9 bg-slate-100 rounded-lg text-black focus:border-none focus:outline-none"
+            />
+            <span className="absolute inset-y-0 left-3 flex items-center">
+              <FaMapMarkerAlt className="text-gray-500" />
+            </span>
+          </div>
+
+          {/* Restrict location */}
+          <div className="flex gap-3">
+            <input
+              type="checkbox"
+              id="restrictLocation"
+              value="true"
+              className="h-5 w-5"
+            />
+            <label
+              htmlFor="restrictLocation"
+              className="inline-flex items-center cursor-pointer"
+            >
+              <div className="flex flex-col gap-1">
+                <span className=" text-black-opacity-50">
+                  Restrict Location to Guests
+                </span>
+                <span className="text-sm">
+                  Only confirmed guests may see the location
+                </span>
+              </div>
+            </label>
+          </div>
+
           <div className="relative full">
             {" "}
             <input
@@ -214,34 +286,32 @@ export default function Dashboard() {
             </span>
           </div>
 
-          <label htmlFor="country" className="block mb-1">
-            Country
-          </label>
-          <input
-            type="text"
-            id="country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            required
-            className="w-full p-2 border rounded text-black"
-          />
-
-          <label htmlFor="city" className="block mb-1">
-            City
-          </label>
-          <input
-            type="text"
-            id="city"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-            className="w-full p-2 border rounded text-black"
-          />
+          <h3 className=" text-md text-black-opacity-80 font-medium">
+            Event Options:
+          </h3>
+          <div className="full bg-gray-100 p-4 rounded gap-3 text-black-opacity-50">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <FaTicketAlt />
+                <span>Attendance Fee</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <span>0 ETH</span>
+                <FaEdit />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <MdPeople />
+                <span>Capacity</span>
+              </div>
+            </div>
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
+            className="w-full p-2 bg-black-opacity-80 rounded-xl text-white hover:bg-blue-600 disabled:bg-blue-300"
           >
             {loading ? "Creating..." : "Create Meetup"}
           </button>
