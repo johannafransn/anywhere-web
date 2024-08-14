@@ -1,4 +1,5 @@
 import { db, meetup, guest, user } from "@/db";
+import { EventEscrow } from "@/services/EventEscrow";
 import { EVENT_ESCROW_ADDRESS_BASE_TESTNET as escrowAddress } from "@/utils/constants";
 import { and, eq, exists } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,8 +7,16 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
-    const { name, description, image, date, creatorUserId, city, country } =
-      req.meetup;
+    const {
+      name,
+      description,
+      image,
+      date,
+      creatorUserId,
+      city,
+      country,
+      attendanceFee,
+    } = req.meetup;
 
     // Validate required fields
     if (!name || !description || !image || !date || !creatorUserId) {
@@ -41,6 +50,12 @@ export async function POST(request: NextRequest) {
 
       return newMeetup;
     });
+
+    const eventEscrow = new EventEscrow();
+    const txReceipt = await eventEscrow.createEvent(result.id, attendanceFee);
+    if (!txReceipt) {
+      throw Error("Failed to create event");
+    }
 
     return NextResponse.json(result);
   } catch (error) {

@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [formattedEndDate, setFormattedEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [attendanceFee, setAttendanceFee] = useState("0");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,11 +44,12 @@ export default function Dashboard() {
       // Create meetup
       const meetupData = {
         name,
-    location,
+        location,
         country,
         description,
         image: imageUrl,
         creatorUserId: Auth.id,
+        attendanceFee,
 
         startDate: new Date(startDate).toISOString(),
         endDate: new Date(endDate).toISOString(),
@@ -75,13 +77,13 @@ export default function Dashboard() {
     document.getElementById("imageInput")?.click();
   };
 
-  const handleStartDateChange = (e) => {
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
     setStartDate(selectedDate);
     setFormattedStartDate(formatDate(selectedDate));
   };
 
-  const handleEndDateChange = (e) => {
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
     setEndDate(selectedDate);
     setFormattedEndDate(formatDate(selectedDate));
@@ -102,18 +104,32 @@ export default function Dashboard() {
     if (!timeString) return "";
     const [hours, minutes] = timeString.split(":");
     const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+    date.setHours(Number(hours));
+    date.setMinutes(Number(minutes));
+    const options = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    } as Intl.DateTimeFormatOptions;
     return date.toLocaleTimeString("en-US", options);
   };
 
-  const handleStartTimeChange = (e) => {
+  const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStartTime(formatTime(e.target.value));
   };
 
-  const handleEndTimeChange = (e) => {
+  const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndTime(formatTime(e.target.value));
+  };
+
+  const handleAttendanceFeeChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    // Allow only numbers and up to 18 decimal places
+    if (/^\d*\.?\d{0,18}$/.test(value)) {
+      setAttendanceFee(value);
+    }
   };
 
   return (
@@ -288,7 +304,7 @@ export default function Dashboard() {
             </span>
           </div>
 
-          <h3 className=" text-md text-black-opacity-80 font-medium">
+          <h3 className="text-md text-black-opacity-80 font-medium">
             Event Options:
           </h3>
           <div className="full bg-gray-100 p-4 rounded gap-3 text-black-opacity-50">
@@ -298,8 +314,14 @@ export default function Dashboard() {
                 <span>Attendance Fee</span>
               </div>
               <div className="flex gap-2 items-center">
-                <span>0 ETH</span>
-                <FaEdit />
+                <input
+                  type="text"
+                  value={attendanceFee}
+                  onChange={handleAttendanceFeeChange}
+                  placeholder="0"
+                  className="w-20 p-1 text-right bg-white rounded"
+                />
+                <span>ETH</span>
               </div>
             </div>
             <div className="flex items-center justify-between">
