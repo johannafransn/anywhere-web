@@ -1,4 +1,5 @@
 import { db, meetup, guest, user } from "@/db";
+import { EVENT_ESCROW_ADDRESS_BASE_TESTNET as escrowAddress } from "@/utils/constants";
 import { and, eq, exists } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,9 +16,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    //const escrowAddress = callFactoryAndCreateEscrow();
-    const escrowAddress = "0x1234567890";
 
     // Create the meetup and add the creator as a guest in a transaction
     const result = await db.transaction(async (tx) => {
