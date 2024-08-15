@@ -18,6 +18,7 @@ export default function Home() {
             Get paid to host IRL meetups and let your guests earn by bringing a
             friend.
           </p>
+          {/* TO DO: Change button to create meetup button */}
           <LoginButton />
         </div>
       </div>

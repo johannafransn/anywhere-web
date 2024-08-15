@@ -1,8 +1,10 @@
 "use client";
 
 import { useGetUserMeetupsByUserId } from "@/hooks/useGetMeetupsByUserId";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -16,27 +18,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-col w-full md:w-4/5 ">
+    <div className="flex flex-col w-full md:w-3/5 mt-12 mx-auto">
       <div className="flex flex-col text-center justify-center text-lg">
         <div className="flex flex-row justify-between">
           <p className="text-[30px] ">Meetups</p>
-          <div className="inline-flex w-[180px] rounded-md bg-gray-200 ">
+          <div className="inline-flex rounded-md bg-gray-200 ">
             <button
               onClick={() => setIsPastEvents(false)}
-              className={`px-4 py-2 rounded-l-md transition-colors duration-200 ${
+              className={`px-4 py-2 w-32 rounded-md transition-colors duration-200 ${
                 !isPastEvents
-                  ? "bg-gray-400 text-white"
-                  : "text-gray-700 hover:bg-gray-300"
+                  ? "bg-gray-300 text-black-opacity-80 m-1"
+                  : "text-gray-700 hover:underline m-1"
               }`}
             >
               Upcoming
             </button>
             <button
               onClick={() => setIsPastEvents(true)}
-              className={`px-4 py-2 rounded-r-md transition-colors duration-200 ${
+              className={`px-4 py-2 w-32 rounded-md transition-colors duration-200 ${
                 isPastEvents
-                  ? "bg-gray-400 text-white"
-                  : "text-gray-700 hover:bg-gray-300"
+                  ? "bg-gray-300 text-black-opacity-80 m-1"
+                  : "text-gray-700 hover:underline m-1"
               }`}
             >
               Past
@@ -45,7 +47,9 @@ export default function Dashboard() {
         </div>
 
         <div className="mt-24">
-          <h2>{isPastEvents ? "Past Meetups" : "Upcoming Meetups"}</h2>
+          <h2 className="text-4xl mb-4">
+            {isPastEvents ? "Past Meetups" : "Upcoming Meetups"}
+          </h2>
           {loading ? (
             <div>Loading...</div>
           ) : meetups?.length > 0 ? (
@@ -71,7 +75,18 @@ export default function Dashboard() {
               </div>
             ))
           ) : (
-            <div>No meetups available</div>
+            <div className="flex flex-col gap-2 items-center">
+              <h4 className="text-black-opacity-30 font-extra">
+                Propose a meetup and make lifelong friends.
+              </h4>
+              <Link
+                href="/create-meetup"
+                className="py-3 px-5 text-sm flex gap-2 items-center bg-black-opacity-80 text-white font-light rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
+              >
+                <FaPlus className="font-extralight" />
+                Propose new meetup
+              </Link>
+            </div>
           )}
         </div>
       </div>

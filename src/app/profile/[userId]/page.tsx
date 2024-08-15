@@ -1,6 +1,7 @@
 "use client";
 import useGetUserById from "@/hooks/useGetUserById";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
       <div className="mt-12">
+        {user.im}
         <h2
           className="text-center font-bold text-7xl leading-normal tracking-tight uppercase mb-3"
           style={{ fontSize: 30, lineHeight: 1 }}
