@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="relative flex flex-col w-full md:w-4/5 items-center justify-center">
       <div className="mt-12">
-        {user.im}
+        {user}
         <h2
           className="text-center font-bold text-7xl leading-normal tracking-tight uppercase mb-3"
           style={{ fontSize: 30, lineHeight: 1 }}
