@@ -6,11 +6,28 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { toast } from "react-toastify";
+import CityCard from "../components/CityCard";
 
 export default function Dashboard() {
   const router = useRouter();
   const [frames, setFrames] = useState<any[]>([]);
   const { meetups, loading } = useGetAllMeetups();
+
+  const cities = [
+    { name: "Madrid", meetupsHosted: 5, region: "Europe", color: "pink-600" },
+    {
+      name: "Chiang Mai",
+      meetupsHosted: 6,
+      region: "Asia",
+      color: "green-600",
+    },
+    {
+      name: "New York",
+      meetupsHosted: 18,
+      region: "North America",
+      color: "orange-600",
+    },
+  ];
 
   useEffect(() => {}, []);
 
@@ -76,56 +93,12 @@ export default function Dashboard() {
             Pick a city. Any city.
           </p>
         </div>
+
         <div className="flex flex-col space-y-4 p-2">
           <div className="grid grid-cols-2 gap-8">
-            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
-              <div className="h-20 w-20 rounded-lg bg-pink-600 shadow-sm" />
-              <div className="flex flex-col justify-between py-1 text-left text-sm">
-                <div className="flex gap-4 items-center justify-between">
-                  <h4 className="font-medium">Madrid</h4>
-                  <FaLink className="text-black-opacity-50 font-light" />
-                </div>
-
-                <div className="flex items-center gap-2 text-black-opacity-60">
-                  Meetups hosted: 5
-                </div>
-                <div className="flex items-center text-black-opacity-50">
-                  <p>Europe</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
-              <div className="h-20 w-20 rounded-lg bg-green-600 shadow-sm" />
-              <div className="flex flex-col justify-between py-1 text-left text-sm">
-                <div className="flex gap-4 items-center justify-between">
-                  <h4 className="font-medium">Chiang Mai</h4>
-                  <FaLink className="text-black-opacity-50 font-light" />
-                </div>
-
-                <div className="flex items-center gap-2 text-black-opacity-60">
-                  Meetups hosted: 6
-                </div>
-                <div className="flex items-center text-black-opacity-50">
-                  <p>Asia</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
-              <div className="h-20 w-20 rounded-lg bg-orange-600 shadow-sm" />
-              <div className="flex flex-col justify-between py-1 text-left text-sm">
-                <div className="flex gap-4 items-center justify-between">
-                  <h4 className="font-medium">New York</h4>
-                  <FaLink className="text-black-opacity-50 font-light" />
-                </div>
-
-                <div className="flex items-center gap-2 text-black-opacity-60">
-                  Meetups hosted: 18
-                </div>
-                <div className="flex items-center text-black-opacity-50">
-                  <p>North America</p>
-                </div>
-              </div>
-            </div>
+            {cities.map((city, index) => (
+              <CityCard key={index} city={city} />
+            ))}
           </div>
         </div>
       </div>

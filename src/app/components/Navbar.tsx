@@ -5,12 +5,7 @@ import { Auth } from "@/utils/cookie-auth";
 import { useAccount, useDisconnect } from "wagmi";
 import LoginButton from "./LoginButton";
 import { useUserSession } from "@/hooks/useUserSession";
-import {
-  LuFileQuestion,
-  LuMapPin,
-  LuShieldQuestion,
-  LuTicket,
-} from "react-icons/lu";
+import { LuMapPin, LuTicket } from "react-icons/lu";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import useGetUserById from "@/hooks/useGetUserById";
