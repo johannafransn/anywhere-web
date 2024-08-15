@@ -4,7 +4,6 @@
 import useGetAllMeetups from "@/hooks/useGetAllMeetups";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaLink } from "react-icons/fa";
 import { toast } from "react-toastify";
 import CityCard from "../components/CityCard";
 

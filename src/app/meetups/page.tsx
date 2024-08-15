@@ -81,9 +81,9 @@ export default function Dashboard() {
               </h4>
               <button
                 onClick={() => router.push("/create-meetup")}
-                className="py-3 px-5 text-sm flex gap-2 items-center bg-black-opacity-80 text-white font-light rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
+                className="py-2 px-4 text-sm flex gap-2 items-center bg-black-opacity-80 text-white font-light rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
               >
-                <FaPlus className="font-extralight" />
+                <FaPlus className="h-3 w-3" />
                 Create a meetup
               </button>
             </div>

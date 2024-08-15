@@ -1,6 +1,6 @@
 "use client";
 import useGetUserById from "@/hooks/useGetUserById";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
+// import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
