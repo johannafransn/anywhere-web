@@ -31,6 +31,7 @@ export default function Dashboard() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [attendanceFee, setAttendanceFee] = useState("0");
+  const [capacity, setCapacity] = useState(0);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -146,6 +147,11 @@ export default function Dashboard() {
     if (/^\d*\.?\d{0,18}$/.test(value)) {
       setAttendanceFee(value);
     }
+  };
+
+  const handleCapacityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCapacity(Number(value));
   };
 
   return (
@@ -353,9 +359,9 @@ export default function Dashboard() {
               </div>
               <div className="flex gap-2 items-center">
                 <input
-                  type="text"
-                  value={attendanceFee}
-                  onChange={handleAttendanceFeeChange}
+                  type="number"
+                  value={capacity}
+                  onChange={handleCapacityChange}
                   placeholder="0"
                   className="w-20 p-1 text-right bg-white rounded"
                 />

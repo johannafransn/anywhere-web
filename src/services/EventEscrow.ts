@@ -1,6 +1,7 @@
 import { parseEther, getContract, Hex, PublicClient, WalletClient } from "viem";
 import { ViemService } from "./Viem";
 import { EVENT_ESCROW_ADDRESS_BASE_TESTNET } from "@/utils/constants";
+import { eventEscrowAbi } from "./abi/escrow";
 
 export class EventEscrow extends ViemService {
   private eventEscrowAddress: Hex;
@@ -95,7 +96,8 @@ export class EventEscrow extends ViemService {
     eventId: number | string,
     amount: number | string
   ) {
-    const tokenContract = await this.getTokenContract(this.walletClient);
+    const walletClient = await this.getWalletClient();
+    const tokenContract = await this.getTokenContract(walletClient);
     const formattedEventId = parseEther(String(eventId));
     const formattedAmount = parseEther(String(amount));
 
@@ -107,13 +109,13 @@ export class EventEscrow extends ViemService {
         value: formattedAmount,
       });
 
-      if (!this.walletClient.account) {
+      if (!walletClient || !walletClient.account) {
         throw new Error("Wallet client account is undefined");
       }
 
-      const hash = await this.walletClient.writeContract({
+      const hash = await walletClient.writeContract({
         ...request,
-        account: this.walletClient.account,
+        account: walletClient.account,
       });
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
@@ -127,6 +129,7 @@ export class EventEscrow extends ViemService {
   }
 
   public async createEvent(
+    organizer: Hex,
     eventId: number | string,
     amountReqToAttend: number | string
   ) {
@@ -138,10 +141,10 @@ export class EventEscrow extends ViemService {
       const { request } = await this.publicClient.simulateContract({
         ...tokenContract,
         functionName: "createEvent",
-        args: [formattedEventId, formattedAmountReqToAttend],
+        args: [organizer, formattedEventId, formattedAmountReqToAttend],
       });
 
-      const hash = await this.walletClient.writeContract({
+      const hash = await this.serverClient.writeContract({
         ...request,
         account: this.serverAccount,
       });

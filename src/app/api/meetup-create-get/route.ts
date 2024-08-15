@@ -3,23 +3,27 @@ import { EventEscrow } from "@/services/EventEscrow";
 import { EVENT_ESCROW_ADDRESS_BASE_TESTNET as escrowAddress } from "@/utils/constants";
 import { and, eq, exists } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
+import { Hex } from "viem";
 
 export async function POST(request: NextRequest) {
   try {
+    // TODO: get endDate
+    // TODO: get walletAddress
     const req = await request.json();
     const {
       name,
       description,
       image,
-      date,
+      startDate,
       creatorUserId,
       city,
       country,
       attendanceFee,
+      organizerWalletAddress,
     } = req.meetup;
 
     // Validate required fields
-    if (!name || !description || !image || !date || !creatorUserId) {
+    if (!name || !description || !image || !startDate || !creatorUserId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -27,6 +31,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the meetup and add the creator as a guest in a transaction
+    // TODO: store endDate
+    // TODO: store capacity
+    // TODO: store location
+    // TODO: store requiredAmount
     const result = await db.transaction(async (tx) => {
       const [newMeetup] = await tx
         .insert(meetup)
@@ -36,7 +44,7 @@ export async function POST(request: NextRequest) {
           image,
           escrowAddress,
           createdBy: creatorUserId,
-          date: new Date(date),
+          date: new Date(startDate),
           city,
           country,
         })
@@ -52,7 +60,11 @@ export async function POST(request: NextRequest) {
     });
 
     const eventEscrow = new EventEscrow();
-    const txReceipt = await eventEscrow.createEvent(result.id, attendanceFee);
+    const txReceipt = await eventEscrow.createEvent(
+      organizerWalletAddress as Hex,
+      result.id,
+      attendanceFee as string | number
+    );
     if (!txReceipt) {
       throw Error("Failed to create event");
     }

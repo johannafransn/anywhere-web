@@ -20,7 +20,6 @@ export class ViemService {
   protected serverClient: WalletClient;
   protected serverAccount: Account;
   public publicClient: PublicClient;
-  public walletClient: WalletClient;
 
   constructor(chain: SupportChainType = baseSepolia) {
     this.currentChain = chain;
@@ -42,10 +41,11 @@ export class ViemService {
       account: this.serverAccount,
       transport: http(),
     });
+  }
 
-    this.walletClient = createWalletClient({
+  public async getWalletClient() {
+    return createWalletClient({
       chain: this.currentChain,
-      account: this.serverAccount,
       transport: custom(window.ethereum!),
     });
   }
