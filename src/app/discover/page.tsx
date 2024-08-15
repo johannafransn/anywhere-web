@@ -4,6 +4,7 @@
 import useGetAllMeetups from "@/hooks/useGetAllMeetups";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaLink } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 export default function Dashboard() {
@@ -14,52 +15,117 @@ export default function Dashboard() {
   useEffect(() => {}, []);
 
   return (
-    <div className="flex flex-col w-full md:w-4/5">
-      <div className="flex flex-col text-center justify-center text-lg">
-        <div className="mt-2 mb-3" role="status">
-          <button
-            onClick={() => router.push("/create-meetup")}
-            className="bg-purple-600 text-white px-4 py-2 rounded-md"
-          >
-            Create a meetup
-          </button>
+    <div className="flex flex-col w-full mx-auto items-center md:w-4/5">
+      <div className="flex flex-col text-center justify-center">
+        <div className="mt-2 mb-7 text-left" role="status">
+          <h3 className="text-2xl font-medium mb-2  ">Upcoming</h3>
+          <p className="text-sm text-black-opacity-60">
+            Get a pulse on all events happening around the world.
+          </p>
         </div>
-        Here is a dashboard with all meetups available
         <div className="flex flex-col space-y-4 p-2">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-8">
             {meetups?.length ? (
               meetups.map((meetup: any, index: number) => (
                 <div
                   onClick={() => router.push(`/meetup/${meetup.meetup.id}`)}
                   key={index}
-                  className="h-auto max-w-full rounded-lg text-grey p-3 bg-zinc-300"
+                  className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80"
                 >
                   <img
-                    className="h-auto max-w-full rounded-lg mb-2"
+                    className="h-20 w-20 rounded-lg shadow-sm"
                     src={meetup.meetup.image}
                     alt={meetup.meetup.name}
                   />
-                  <h4 className="text-l font-semibold">{meetup.meetup.name}</h4>
-                  <p className="text-xs font-bold">{meetup.meetup.country}</p>
-                  <p className="text-xs">{meetup.meetup.description}</p>
-                  <div className="text-xs flex flex-row">
-                    Creator: {meetup.creator.name}
-                    <div className="w-5 h-5 ml-1 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  <div className="flex flex-col justify-between py-1 text-left text-sm">
+                    <div className="flex gap-4">
+                      <h4 className="font-medium">{meetup.meetup.name}</h4>
+                      <p className="text-black-opacity-30">Pending</p>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-black-opacity-60">
                       <img
                         src={meetup.creator.avatar}
                         alt="Avatar"
-                        className="w-full h-full object-cover"
-                      />{" "}
+                        className=" object-cover shadow-sm w-6 h-6 rounded-full"
+                      />
+                      Proposed by: {meetup.creator.name}
                     </div>
-                  </div>
-                  <div className="text-xs flex flex-row">
-                    {meetup?.isGuest ? "Confirmed" : "Not signed up yet"}
+                    <div className="flex items-center text-black-opacity-50">
+                      {/* Dummy data */}
+                      <p>Saturday, Aug 6 • </p>
+                      {meetup.meetup.country}
+                      {/* This is where the meetup address and date will go */}
+                    </div>
+                    {/* <div className="">
+                      {meetup?.isGuest ? "Confirmed" : "Not signed up yet"}
+                    </div> */}
                   </div>
                 </div>
               ))
             ) : (
               <p>No results found...</p>
             )}
+          </div>
+        </div>
+
+        {/* Map all cities */}
+        <div className="mt-2 mb-7 text-left">
+          <h3 className="text-2xl font-medium mt-16 mb-2">Cities</h3>
+          <p className="text-sm text-black-opacity-60">
+            Pick a city. Any city.
+          </p>
+        </div>
+        <div className="flex flex-col space-y-4 p-2">
+          <div className="grid grid-cols-2 gap-8">
+            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
+              <div className="h-20 w-20 rounded-lg bg-pink-600 shadow-sm" />
+              <div className="flex flex-col justify-between py-1 text-left text-sm">
+                <div className="flex gap-4 items-center justify-between">
+                  <h4 className="font-medium">Madrid</h4>
+                  <FaLink className="text-black-opacity-50 font-light" />
+                </div>
+
+                <div className="flex items-center gap-2 text-black-opacity-60">
+                  Meetups hosted: 5
+                </div>
+                <div className="flex items-center text-black-opacity-50">
+                  <p>Europe</p>
+                </div>
+              </div>
+            </div>
+            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
+              <div className="h-20 w-20 rounded-lg bg-green-600 shadow-sm" />
+              <div className="flex flex-col justify-between py-1 text-left text-sm">
+                <div className="flex gap-4 items-center justify-between">
+                  <h4 className="font-medium">Chiang Mai</h4>
+                  <FaLink className="text-black-opacity-50 font-light" />
+                </div>
+
+                <div className="flex items-center gap-2 text-black-opacity-60">
+                  Meetups hosted: 6
+                </div>
+                <div className="flex items-center text-black-opacity-50">
+                  <p>Asia</p>
+                </div>
+              </div>
+            </div>
+            <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
+              <div className="h-20 w-20 rounded-lg bg-orange-600 shadow-sm" />
+              <div className="flex flex-col justify-between py-1 text-left text-sm">
+                <div className="flex gap-4 items-center justify-between">
+                  <h4 className="font-medium">New York</h4>
+                  <FaLink className="text-black-opacity-50 font-light" />
+                </div>
+
+                <div className="flex items-center gap-2 text-black-opacity-60">
+                  Meetups hosted: 18
+                </div>
+                <div className="flex items-center text-black-opacity-50">
+                  <p>North America</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -79,13 +79,13 @@ export default function Dashboard() {
               <h4 className="text-black-opacity-30 font-extra">
                 Propose a meetup and make lifelong friends.
               </h4>
-              <Link
-                href="/create-meetup"
+              <button
+                onClick={() => router.push("/create-meetup")}
                 className="py-3 px-5 text-sm flex gap-2 items-center bg-black-opacity-80 text-white font-light rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
               >
                 <FaPlus className="font-extralight" />
-                Propose new meetup
-              </Link>
+                Create a meetup
+              </button>
             </div>
           )}
         </div>
