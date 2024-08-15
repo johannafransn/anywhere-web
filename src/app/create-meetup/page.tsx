@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [description, setDescription] = useState("");
   const [country, setCountry] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [formattedStartDate, setFormattedStartDate] = useState("");
@@ -74,7 +75,22 @@ export default function Dashboard() {
   };
 
   const handleImageClick = () => {
-    document.getElementById("imageInput")?.click();
+    if (image) {
+      // If an image is already set, remove it
+      setImage(null);
+      setImageUrl(null);
+    } else {
+      // Otherwise, trigger the file input click
+      document.getElementById("imageInput")?.click();
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      setImage(file);
+      setImageUrl(URL.createObjectURL(file));
+    }
   };
 
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,11 +131,11 @@ export default function Dashboard() {
   };
 
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartTime(formatTime(e.target.value));
+    setStartTime(e.target.value);
   };
 
   const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndTime(formatTime(e.target.value));
+    setEndTime(e.target.value);
   };
 
   const handleAttendanceFeeChange = (
@@ -133,65 +149,72 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex m-auto pt-9 align-middle w-1/2  ">
-      <form onSubmit={handleSubmit} className="gap-4 flex">
-        {/* Image */}
-        <div>
-          <input
-            type="file"
-            id="imageInput"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files?.[0] || null)}
-            required
-            className="hidden"
-          />
-          <Image
-            src="/create-meetup-ph.png" // Replace with the path to your image
-            alt="Upload"
-            width={300}
-            height={300}
-            onClick={handleImageClick}
-            className="cursor-pointer" // Adjust size and styling as needed
-          />
-        </div>
-
-        {/* The rest of the form */}
-        <div className="flex flex-col gap-3">
-          {/* Top part
-          TODO: Make those arrows clickable
-          */}
-          <div className="flex  mb-2 items-center justify-between">
-            <div className="flex p-2 bg-gray-200 gap-2 w-2/5 h-10 items-center rounded-xl justify-center">
+    <div className="flex flex-col m-auto pt-9 align-middle w-1/2">
+      <form onSubmit={handleSubmit} className="gap-4 flex flex-col">
+        {/* Image and Event Title Section */}
+        <div className="flex items-center gap-4 mb-4">
+          {/* Image */}
+          <div className="relative flex justify-center">
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={handleImageChange}
+              required
+              className="hidden"
+            />
+            <div className="relative cursor-pointer" onClick={handleImageClick}>
               <Image
-                src="/pfp.png"
-                width={25}
-                height={25}
-                alt="pfp"
-                className="rounded-2xl"
+                src={imageUrl || "/create-meetup-ph.png"} // Use the selected image or the placeholder
+                alt="Upload"
+                width={150}
+                height={150}
+                className="rounded-lg"
               />
-              <p className="text-black-opacity-60">girl.eth</p>
-              <FaChevronDown className="text-black-opacity-60" />
-            </div>
-
-            <div className="flex py-2 px-4 bg-gray-200 gap-2 h-10 items-center rounded-xl justify-center">
-              <CiGlobe />
-              <p className="text-black-opacity-60">Public</p>
-
-              <FaChevronDown className="text-black-opacity-60" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-50 transition-opacity duration-300 rounded-lg">
+                <span className="text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  {image ? "Delete" : "Upload"}
+                </span>
+              </div>
             </div>
           </div>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="text-4xl w-full mb-4 bg-transparent text-black-opacity-80 focus:border-none focus:outline-none"
-            placeholder="Event Title"
-          />
 
+          {/* Event Title and Dropdowns */}
+          <div className="flex flex-col gap-3 w-full">
+            <div className="flex items-center justify-between">
+              <div className="flex p-2 bg-gray-200 gap-2 w-2/5 h-10 items-center rounded-xl justify-center">
+                <Image
+                  src="/pfp.png"
+                  width={25}
+                  height={25}
+                  alt="pfp"
+                  className="rounded-2xl"
+                />
+                <p className="text-black-opacity-60">girl.eth</p>
+                <FaChevronDown className="text-black-opacity-60" />
+              </div>
+
+              <div className="flex py-2 px-4 bg-gray-200 gap-2 h-10 items-center rounded-xl justify-center">
+                <CiGlobe />
+                <p className="text-black-opacity-60">Public</p>
+                <FaChevronDown className="text-black-opacity-60" />
+              </div>
+            </div>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="text-4xl w-full mb-4 bg-transparent text-black-opacity-80 focus:border-none focus:outline-none"
+              placeholder="Event Title"
+            />
+          </div>
+        </div>
+        {/* The rest of the form */}
+        <div className="flex flex-col gap-3">
           {/* The time and date */}
-          <div className="relative flex items-center gap-1 bg-slate-100 rounded-lg p-2">
+          <div className="relative flex items-center gap-4 bg-slate-100 rounded-lg p-2">
             {/* Time icons */}
             <div className="flex flex-col items-center w-6 mr-8">
               <FaCircle className="text-black-opacity-50" />
@@ -200,7 +223,7 @@ export default function Dashboard() {
             </div>
 
             {/* Date fields */}
-            <div className="flex flex-col gap-1 w-18">
+            <div className="flex flex-col gap-2 w-3/4">
               <input
                 type="text"
                 id="startDate"
@@ -226,7 +249,7 @@ export default function Dashboard() {
             </div>
 
             {/* TODO: Fix time and date hehe */}
-            <div className="flex flex-col gap-1 w-16">
+            <div className="flex flex-col gap-2 w-1/4">
               <input
                 type="time"
                 id="startTime"
@@ -246,8 +269,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* TODO: Add autofill address here*/}
-          <div className="relative full">
+          {/* TODO: Add autofill address here */}
+          <div className="relative full mb-4">
             <label htmlFor="country" className="hidden">
               Country
             </label>
@@ -266,7 +289,7 @@ export default function Dashboard() {
           </div>
 
           {/* Restrict location */}
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3 mb-4 ml-2">
             <input
               type="checkbox"
               id="restrictLocation"
@@ -278,10 +301,10 @@ export default function Dashboard() {
               className="inline-flex items-center cursor-pointer"
             >
               <div className="flex flex-col gap-1">
-                <span className=" text-black-opacity-50">
+                <span className="text-black-opacity-70 font-medium">
                   Restrict Location to Guests
                 </span>
-                <span className="text-sm">
+                <span className="text-sm text-black-opacity-50">
                   Only confirmed guests may see the location
                 </span>
               </div>
@@ -289,7 +312,6 @@ export default function Dashboard() {
           </div>
 
           <div className="relative full">
-            {" "}
             <input
               id="description"
               type="text"
@@ -304,9 +326,9 @@ export default function Dashboard() {
             </span>
           </div>
 
-          <h3 className="text-md text-black-opacity-80 font-medium">
+          {/* <h3 className="text-md text-black-opacity-80 font-medium">
             Event Options:
-          </h3>
+          </h3> */}
           <div className="full bg-gray-100 p-4 rounded gap-3 text-black-opacity-50">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
@@ -328,6 +350,16 @@ export default function Dashboard() {
               <div className="flex items-center gap-2">
                 <MdPeople />
                 <span>Capacity</span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="text"
+                  value={attendanceFee}
+                  onChange={handleAttendanceFeeChange}
+                  placeholder="0"
+                  className="w-20 p-1 text-right bg-white rounded"
+                />
+                <span>People</span>
               </div>
             </div>
           </div>
