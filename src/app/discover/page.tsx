@@ -7,6 +7,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import CityCard from "../components/CityCard";
 
+export type City = {
+  name: string;
+  meetupsHosted: number;
+  region: string;
+  color: string;
+};
+
 export default function Dashboard() {
   const router = useRouter();
   const [frames, setFrames] = useState<any[]>([]);
