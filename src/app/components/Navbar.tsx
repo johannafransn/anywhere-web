@@ -14,6 +14,8 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import useGetUserById from "@/hooks/useGetUserById";
+import { FaPhotoFilm } from "react-icons/fa6";
+import { MdOutlineExitToApp } from "react-icons/md";
 
 const Navbar = () => {
   const { userSession, updateUserSession } = useUserSession();
@@ -45,10 +47,10 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex justify-between flex-row font-light items-center gap-5">
-        <Link href="/" className={linkClass("/")}>
+        {/* <Link href="/" className={linkClass("/")}>
           <LuFileQuestion />
           How It Works
-        </Link>
+        </Link> */}
         <Link href="/meetups" className={linkClass("/meetups")}>
           <LuTicket />
           Meetups
@@ -58,15 +60,13 @@ const Navbar = () => {
         </Link>
       </div>
       {userSession || isConnected ? (
-        <div className="flex items-center flex-row">
-          <Link href="/create-meetup" className="mr-1">
-            Propose a Meetup |
-          </Link>
-          <button className="mr-3" onClick={handleSignout}>
-            Sign Out
+        <div className="flex items-center flex-row space-x-5 text-black-opacity-50">
+          <Link href="/create-meetup">Propose New Meetup</Link>
+          <button onClick={handleSignout}>
+            <MdOutlineExitToApp />
           </button>
           <Link href={`/profile/${Auth.id}`}>
-            <div className="w-10 h-10 ml-5 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
               {user ? (
                 <img
                   src={user.avatar}
@@ -74,7 +74,9 @@ const Navbar = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-gray-500">Photo</span>
+                <span className="text-gray-500">
+                  <FaPhotoFilm />
+                </span>
               )}
             </div>
           </Link>
