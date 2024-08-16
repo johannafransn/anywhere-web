@@ -5,25 +5,52 @@ import { and, eq, exists } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { Hex } from "viem";
 
+export type MeetupData = {
+  name: string;
+  description: string;
+  location: string;
+  image: File | null;
+  imageUrl: string | null;
+  startDateTime: string;
+  endDateTime: string;
+  attendanceFee: string;
+  capacity: number;
+  visibility: string;
+  organizerWalletAddress: string | Hex;
+  creatorUserId: any;
+};
+
 export async function POST(request: NextRequest) {
   try {
-    // TODO: get endDate
-    // TODO: get walletAddress
     const req = await request.json();
     const {
       name,
       description,
       image,
-      startDate,
+      startDateTime,
+      endDateTime,
       creatorUserId,
-      city,
-      country,
+      location,
       attendanceFee,
+      capacity,
+      visibility,
       organizerWalletAddress,
-    } = req.meetup;
+    } = req.meetup as MeetupData;
 
     // Validate required fields
-    if (!name || !description || !image || !startDate || !creatorUserId) {
+    if (
+      !name ||
+      !description ||
+      !image ||
+      !startDateTime ||
+      !endDateTime ||
+      !creatorUserId ||
+      !attendanceFee ||
+      !capacity ||
+      !visibility ||
+      !organizerWalletAddress ||
+      !location
+    ) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -31,10 +58,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the meetup and add the creator as a guest in a transaction
-    // TODO: store endDate
-    // TODO: store capacity
-    // TODO: store location
-    // TODO: store requiredAmount
     const result = await db.transaction(async (tx) => {
       const [newMeetup] = await tx
         .insert(meetup)
@@ -42,11 +65,14 @@ export async function POST(request: NextRequest) {
           name,
           description,
           image,
-          escrowAddress,
+          organizerWalletAddress,
           createdBy: creatorUserId,
-          date: new Date(startDate),
-          city,
-          country,
+          startDate: new Date(startDateTime),
+          endDate: new Date(endDateTime),
+          location,
+          capacity,
+          visibility,
+          attendanceFee,
         })
         .returning();
 

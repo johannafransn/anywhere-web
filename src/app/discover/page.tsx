@@ -53,7 +53,7 @@ export default function Dashboard() {
                 <div
                   onClick={() => router.push(`/meetup/${meetup.meetup.id}`)}
                   key={index}
-                  className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80"
+                  className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80 cursor-pointer hover:bg-opacity-50 transition-opacity duration-300"
                 >
                   <img
                     className="h-20 w-20 rounded-lg shadow-sm"
@@ -70,7 +70,7 @@ export default function Dashboard() {
                       <img
                         src={meetup.creator.avatar}
                         alt="Avatar"
-                        className=" object-cover shadow-sm w-6 h-6 rounded-full"
+                        className="object-cover shadow-sm w-6 h-6 rounded-full"
                       />
                       Proposed by: {meetup.creator.name}
                     </div>

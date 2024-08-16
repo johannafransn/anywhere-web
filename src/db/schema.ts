@@ -1,10 +1,17 @@
+import { Visibility } from "@/app/create-meetup/page";
 import {
   integer,
   pgTable,
+  pgEnum,
   serial,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+
+const visibilityEnum = pgEnum("visibility", [
+  Visibility.PUBLIC,
+  Visibility.PRIVATE,
+]);
 
 export const user = pgTable("user", {
   id: serial("id").primaryKey(),
@@ -26,14 +33,19 @@ export const user = pgTable("user", {
 export const meetup = pgTable("meetup", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull(),
-  description: varchar("description", { length: 256 }).notNull(),
+  description: varchar("description", { length: 1000 }).notNull(), // Increased length for longer descriptions
   image: varchar("image", { length: 256 }).notNull(),
-  escrowAddress: varchar("escrow_address", { length: 256 }).notNull(),
+  organizerWalletAddress: varchar("organizer_wallet_address", {
+    length: 42,
+  }).notNull(), // Ethereum address length
   createdBy: integer("created_by").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow(),
-  date: timestamp("date"),
-  country: varchar("country", { length: 100 }),
-  city: varchar("city", { length: 100 }),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  location: varchar("location", { length: 256 }).notNull(),
+  capacity: integer("capacity").notNull(),
+  visibility: visibilityEnum("visibility").notNull(),
+  attendanceFee: varchar("attendance_fee", { length: 78 }).notNull(), // Changed to varchar
 });
 
 export const guest = pgTable("guest", {
