@@ -19,7 +19,7 @@ import { CiGlobe } from "react-icons/ci";
 import { MeetupData } from "../api/meetup-create-get/route";
 import { useAccount } from "wagmi";
 
-export enum Visibility {
+enum Visibility {
   PUBLIC = "Public",
   PRIVATE = "Private",
 }

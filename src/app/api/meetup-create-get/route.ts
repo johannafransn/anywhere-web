@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       description,
-      image,
+      imageUrl,
       startDateTime,
       endDateTime,
       creatorUserId,
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (
       !name ||
       !description ||
-      !image ||
+      !imageUrl ||
       !startDateTime ||
       !endDateTime ||
       !creatorUserId ||
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         .values({
           name,
           description,
-          image,
+          image: imageUrl,
           organizerWalletAddress,
           createdBy: creatorUserId,
           startDate: new Date(startDateTime),

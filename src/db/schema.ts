@@ -1,17 +1,10 @@
-import { Visibility } from "@/app/create-meetup/page";
 import {
   integer,
   pgTable,
-  pgEnum,
   serial,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-
-const visibilityEnum = pgEnum("visibility", [
-  Visibility.PUBLIC,
-  Visibility.PRIVATE,
-]);
 
 export const user = pgTable("user", {
   id: serial("id").primaryKey(),
@@ -44,7 +37,7 @@ export const meetup = pgTable("meetup", {
   endDate: timestamp("end_date").notNull(),
   location: varchar("location", { length: 256 }).notNull(),
   capacity: integer("capacity").notNull(),
-  visibility: visibilityEnum("visibility").notNull(),
+  visibility: varchar("visibility", { length: 50 }).notNull(),
   attendanceFee: varchar("attendance_fee", { length: 78 }).notNull(), // Changed to varchar
 });
 

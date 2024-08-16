@@ -71,6 +71,13 @@
       "when": 1723028356839,
       "tag": "0009_robust_switch",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1723800590848,
+      "tag": "0010_noisy_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
