@@ -168,43 +168,6 @@ export default function Dashboard() {
     setDateError(null);
   };
 
-  const formatDateTime = (dateTimeString: string) => {
-    if (!dateTimeString) return "";
-    const dateObj = new Date(dateTimeString);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-    return dateObj.toLocaleString("en-US", options);
-  };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "";
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  };
-
-  const formatTime = (timeString: string) => {
-    if (!timeString) return "";
-    const [hours, minutes] = timeString.split(":");
-    const date = new Date();
-    date.setHours(Number(hours));
-    date.setMinutes(Number(minutes));
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
-
   const handleAttendanceFeeChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

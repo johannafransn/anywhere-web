@@ -1,10 +1,12 @@
 "use client";
 
 import { useGetUserMeetupsByUserId } from "@/hooks/useGetMeetupsByUserId";
+import { formatDate } from "@/utils/helpers";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import SkeletonCard from "../components/SkeletonCard";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function Dashboard() {
     // ... existing code ...
   };
 
+  console.log(meetups, "meetups");
   return (
     <div className="flex flex-col w-full md:w-3/5 mt-12 mx-auto">
       <div className="flex flex-col text-center justify-center text-lg">
@@ -48,29 +51,44 @@ export default function Dashboard() {
 
         <div className="mt-24">
           <h2 className="text-4xl mb-4">
-            {isPastEvents ? "Past Meetups" : "Upcoming Meetups"}
+            {isPastEvents ? "Your Past Meetups" : "Your Upcoming Meetups"}
           </h2>
           {loading ? (
-            <div>Loading...</div>
+            Array.from({ length: 4 }).map((_, index) => (
+              <div className="mb-4" key={index}>
+                <SkeletonCard />
+              </div>
+            ))
           ) : meetups?.length > 0 ? (
             meetups.map((meetup: any) => (
               <div
-                className="grid grid-cols-3 gap-2 text-black mt-3"
+                onClick={() => router.push(`/meetup/${meetup.id}`)}
                 key={meetup.id}
+                className="mb-4 h-auto w-full flex gap-4 rounded-lg text-black-opacity-80 cursor-pointer hover:bg-opacity-50 transition-opacity duration-300"
               >
-                <div className="relative">
-                  <img
-                    src={meetup.image}
-                    alt={meetup.name}
-                    className=" object-cover rounded-lg w-[70px] h-[70px]"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="text-xl font-semibold">{meetup.name}</h3>
-                  <p className="text-sm">{meetup.description}</p>
-                  <p className="text-sm">
-                    Date: {new Date(meetup.date).toLocaleDateString()}
-                  </p>
+                <img
+                  className="h-20 w-20 rounded-lg shadow-sm object-cover"
+                  src={meetup.image}
+                  alt={meetup.name}
+                />
+                <div className="flex flex-col justify-between py-1 text-left text-sm">
+                  <div className="flex gap-4">
+                    <h4 className="font-medium">{meetup.name}</h4>
+                    <p className="text-green-600">Confirmed</p>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-black-opacity-60">
+                    {/*     <img
+                      src={meetup.creator.avatar}
+                      alt="Avatar"
+                      className="object-cover shadow-sm w-6 h-6 rounded-full"
+                    />
+                    Proposed by: {meetup.creator.name} */}
+                  </div>
+                  <div className="flex items-center text-black-opacity-50">
+                    {/* Dummy data */}
+                    <p>{formatDate(meetup.startDate)} </p>
+                  </div>
                 </div>
               </div>
             ))

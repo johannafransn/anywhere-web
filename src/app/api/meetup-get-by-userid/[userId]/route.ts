@@ -19,9 +19,9 @@ export async function GET(
         name: meetup.name,
         description: meetup.description,
         image: meetup.image,
-        date: meetup.date,
-        country: meetup.country,
-        city: meetup.city,
+        startDate: meetup.startDate,
+        endDate: meetup.endDate,
+        location: meetup.location,
       })
       .from(meetup)
       .innerJoin(guest, sql`${guest.meetupId} = ${meetup.id}`)
@@ -29,11 +29,11 @@ export async function GET(
         sql`${guest.userId} = ${userId} AND 
                  ${
                    isPastEvents
-                     ? sql`${meetup.date} < ${currentDate}`
-                     : sql`${meetup.date} >= ${currentDate}`
+                     ? sql`${meetup.startDate} < ${currentDate}`
+                     : sql`${meetup.startDate} >= ${currentDate}`
                  }`
       )
-      .orderBy(meetup.date);
+      .orderBy(meetup.startDate);
 
     return NextResponse.json(meetups);
   } catch (error) {

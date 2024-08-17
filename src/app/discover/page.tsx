@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import CityCard from "../components/CityCard";
+import { formatDate } from "@/utils/helpers";
+import SkeletonCard from "../components/SkeletonCard";
 
 export type City = {
   image: string;
@@ -42,6 +44,13 @@ export default function Dashboard() {
       region: "North America",
       color: "orange-600",
     },
+    {
+      image: "https://i.ibb.co/7Jxt7dm/Rectangle-3.png",
+      name: "Mexico City",
+      meetupsHosted: 2,
+      region: "South America",
+      color: "red-600",
+    },
   ];
 
   useEffect(() => {}, []);
@@ -57,49 +66,52 @@ export default function Dashboard() {
         </div>
         <div className="flex flex-col space-y-4 p-2">
           <div className="grid grid-cols-2 gap-8">
-            {meetups?.length ? (
-              meetups.map((meetup: any, index: number) => (
-                <div
-                  onClick={() => router.push(`/meetup/${meetup.meetup.id}`)}
-                  key={index}
-                  className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80 cursor-pointer hover:bg-opacity-50 transition-opacity duration-300"
-                >
-                  <img
-                    className="h-20 w-20 rounded-lg shadow-sm object-cover"
-                    src={meetup.meetup.image}
-                    alt={meetup.meetup.name}
-                  />
-                  <div className="flex flex-col justify-between py-1 text-left text-sm">
-                    <div className="flex gap-4">
-                      <h4 className="font-medium">{meetup.meetup.name}</h4>
-                      <p className="text-black-opacity-30">
-                        {meetup.isGuest ? "Confirmed" : "Pending"}
-                      </p>
-                    </div>
+            {meetups?.length
+              ? meetups.map((meetup: any, index: number) => (
+                  <div
+                    onClick={() => router.push(`/meetup/${meetup.meetup.id}`)}
+                    key={index}
+                    className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80 cursor-pointer hover:bg-opacity-50 transition-opacity duration-300"
+                  >
+                    <img
+                      className="h-20 w-20 rounded-lg shadow-sm object-cover"
+                      src={meetup.meetup.image}
+                      alt={meetup.meetup.name}
+                    />
+                    <div className="flex flex-col justify-between py-1 text-left text-sm">
+                      <div className="flex gap-4">
+                        <h4 className="font-medium">{meetup.meetup.name}</h4>
+                        <p
+                          className={`${
+                            meetup.isGuest
+                              ? "text-green-600"
+                              : "text-black-opacity-30"
+                          }`}
+                        >
+                          {meetup.isGuest ? "Confirmed" : "Pending"}
+                        </p>
+                      </div>
 
-                    <div className="flex items-center gap-2 text-black-opacity-60">
-                      <img
-                        src={meetup.creator.avatar}
-                        alt="Avatar"
-                        className="object-cover shadow-sm w-6 h-6 rounded-full"
-                      />
-                      Proposed by: {meetup.creator.name}
-                    </div>
-                    <div className="flex items-center text-black-opacity-50">
-                      {/* Dummy data */}
-                      <p>Saturday, Aug 6 • </p>
+                      <div className="flex items-center gap-2 text-black-opacity-60">
+                        <img
+                          src={meetup.creator.avatar}
+                          alt="Avatar"
+                          className="object-cover shadow-sm w-6 h-6 rounded-full"
+                        />
+                        Proposed by: {meetup.creator.name}
+                      </div>
+                      <div className="flex items-center text-black-opacity-50">
+                        {/* Dummy data */}
+                        <p>{formatDate(meetup.meetup.startDate)} </p>
 
-                      {/* This is where the meetup address and date will go */}
+                        {/* This is where the meetup address and date will go */}
+                      </div>
                     </div>
-                    {/* <div className="">
-                      {meetup?.isGuest ? "Confirmed" : "Not signed up yet"}
-                    </div> */}
                   </div>
-                </div>
-              ))
-            ) : (
-              <p>No results found...</p>
-            )}
+                ))
+              : Array.from({ length: 4 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))}
           </div>
         </div>
 

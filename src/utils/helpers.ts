@@ -34,3 +34,26 @@ export const parseQueryUrl = (urlString: string) => {
   }
   return queryParamsObject;
 };
+
+export const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const currentYear = new Date().getFullYear();
+
+  const optionsDate: Intl.DateTimeFormatOptions = {
+    weekday: "long", // Add this line to include the name of the day
+    day: "numeric",
+    month: "short",
+    year: date.getFullYear() === currentYear ? undefined : "numeric",
+  };
+
+  const optionsTime: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  const formattedDate = date.toLocaleDateString(undefined, optionsDate);
+  const formattedTime = date.toLocaleTimeString(undefined, optionsTime);
+
+  return `${formattedDate}, ${formattedTime.toUpperCase()}`;
+};

@@ -234,7 +234,7 @@ export default function Onboard() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-4 mb-4 w-[150px] p-2 bg-black text-white rounded-lg hover:bg-gray-700 disabled:bg-gray-500"
+          className="py-2 px-4 text-sm flex gap-2 items-center bg-black text-white font-light   disabled:bg-gray-500rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
         >
           {loading ? "Creating..." : "Create Profile"}
         </button>
