@@ -97,6 +97,10 @@ export class EventEscrow extends ViemService {
     amount: number | string
   ) {
     const walletClient = await this.getWalletClient();
+    if (!walletClient || !walletClient.account) {
+      throw new Error("Wallet client account is undefined");
+    }
+
     const tokenContract = await this.getTokenContract(walletClient);
     const formattedEventId = parseEther(String(eventId));
     const formattedAmount = parseEther(String(amount));
@@ -107,16 +111,10 @@ export class EventEscrow extends ViemService {
         functionName: "depositEscrow",
         args: [organizer, formattedEventId],
         value: formattedAmount,
-      });
-
-      if (!walletClient || !walletClient.account) {
-        throw new Error("Wallet client account is undefined");
-      }
-
-      const hash = await walletClient.writeContract({
-        ...request,
         account: walletClient.account,
       });
+
+      const hash = await walletClient.writeContract(request);
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
         hash,
@@ -142,17 +140,17 @@ export class EventEscrow extends ViemService {
         ...tokenContract,
         functionName: "createEvent",
         args: [organizer, formattedEventId, formattedAmountReqToAttend],
+        account: this.serverAccount,
       });
 
       const hash = await this.serverClient.writeContract({
         ...request,
-        account: this.serverAccount,
       });
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
         hash,
       });
-      console.log(receipt, "receipt <---");
+
       return receipt;
     } catch (error) {
       console.error(`Error creating event: ${error}`);

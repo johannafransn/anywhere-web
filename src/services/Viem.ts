@@ -30,7 +30,6 @@ export class ViemService {
       throw new Error("PRIVATE_KEY is not set");
     } else {
       this.serverAccount = privateKeyToAccount(`0x${privateKey}`);
-      console.log(this.serverAccount, "this.serverAccount <--");
     }
 
     this.publicClient = createPublicClient({
