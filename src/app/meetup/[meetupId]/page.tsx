@@ -42,7 +42,7 @@ export default function Meetup() {
             </div>
             {meetup && (
               <ReserveSpot
-                isGuest={meetup.meetup.isGuest}
+                isGuest={meetup.isGuest}
                 price={meetup.meetup.attendanceFee}
                 isOwner={meetup.creator.id === Auth.id}
                 meetupId={meetup.meetup.id}

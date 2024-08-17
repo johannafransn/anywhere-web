@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ApiService } from "@/utils/api-service"; // Adjust the import path as necessary
+import { Auth } from "@/utils/cookie-auth";
 
 export default function ReserveSpot(props: any) {
   let { meetupId, userId, isGuest, price, isOwner } = props; // Assuming userId is passed as a prop
@@ -14,7 +15,11 @@ export default function ReserveSpot(props: any) {
   const reserveSpot = async () => {
     setLoading(true);
     try {
-      const response = await ApiService.createGuest({ meetupId, userId });
+      const response = await ApiService.createGuest({
+        meetupId,
+        userId: Auth.id,
+      });
+      console.log("response", response);
 
       if (response) {
         console.log("Spot reserved successfully");
@@ -31,6 +36,7 @@ export default function ReserveSpot(props: any) {
   };
 
   const renderButtonText = () => {
+    console.log(isGuest || isOwner, "is guest or owner", isGuest, isOwner);
     if (isGuest || isOwner) {
       return "You are going!";
     } else if (loading) {

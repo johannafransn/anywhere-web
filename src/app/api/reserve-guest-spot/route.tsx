@@ -6,7 +6,8 @@ export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
     const { meetupId, userId } = req;
-
+    console.log("meetupId", meetupId, req);
+    console.log("userId", userId);
     await db.insert(guest).values({
       meetupId,
       userId,

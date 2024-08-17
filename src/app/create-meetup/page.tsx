@@ -87,7 +87,6 @@ export default function Dashboard() {
       await ApiService.createMeetup({ meetup: apiMeetupData });
 
       resetForm();
-      alert("Meetup created successfully!");
       router.push("/discover");
     } catch (error) {
       console.error("Error creating meetup:", error);
@@ -428,7 +427,7 @@ export default function Dashboard() {
                 <FaTicketAlt />
                 <span>Attendance Fee</span>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center mr-4">
                 <input
                   type="text"
                   value={meetupData.attendanceFee}
@@ -444,7 +443,7 @@ export default function Dashboard() {
                 <MdPeople />
                 <span>Capacity</span>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center ">
                 <input
                   type="number"
                   value={meetupData.capacity}

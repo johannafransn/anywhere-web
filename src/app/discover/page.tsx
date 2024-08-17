@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import CityCard from "../components/CityCard";
 
 export type City = {
+  image: string;
   name: string;
   meetupsHosted: number;
   region: string;
@@ -20,14 +21,22 @@ export default function Dashboard() {
   const { meetups, loading } = useGetAllMeetups();
 
   const cities = [
-    { name: "Madrid", meetupsHosted: 5, region: "Europe", color: "pink-600" },
     {
+      image: "https://i.ibb.co/JxR4MQ9/madrid.jpg",
+      name: "Madrid",
+      meetupsHosted: 5,
+      region: "Europe",
+      color: "pink-600",
+    },
+    {
+      image: "https://i.ibb.co/C6ftX09/chiang-mai.jpg",
       name: "Chiang Mai",
       meetupsHosted: 6,
       region: "Asia",
       color: "green-600",
     },
     {
+      image: "https://i.ibb.co/hWcNTVW/new-york.jpg",
       name: "New York",
       meetupsHosted: 18,
       region: "North America",
@@ -56,14 +65,16 @@ export default function Dashboard() {
                   className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80 cursor-pointer hover:bg-opacity-50 transition-opacity duration-300"
                 >
                   <img
-                    className="h-20 w-20 rounded-lg shadow-sm"
+                    className="h-20 w-20 rounded-lg shadow-sm object-cover"
                     src={meetup.meetup.image}
                     alt={meetup.meetup.name}
                   />
                   <div className="flex flex-col justify-between py-1 text-left text-sm">
                     <div className="flex gap-4">
                       <h4 className="font-medium">{meetup.meetup.name}</h4>
-                      <p className="text-black-opacity-30">Pending</p>
+                      <p className="text-black-opacity-30">
+                        {meetup.isGuest ? "Confirmed" : "Pending"}
+                      </p>
                     </div>
 
                     <div className="flex items-center gap-2 text-black-opacity-60">
@@ -77,7 +88,7 @@ export default function Dashboard() {
                     <div className="flex items-center text-black-opacity-50">
                       {/* Dummy data */}
                       <p>Saturday, Aug 6 • </p>
-                      {meetup.meetup.country}
+
                       {/* This is where the meetup address and date will go */}
                     </div>
                     {/* <div className="">

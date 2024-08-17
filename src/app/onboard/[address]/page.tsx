@@ -93,7 +93,6 @@ export default function Onboard() {
       const user = await ApiService.authenticateUser(userData);
       Auth.setUser(user.id);
       updateUserSession(true);
-      alert("Profile updated successfully!");
       router.push("/discover");
     } catch (error) {
       console.error("Error updating profile:", error);
