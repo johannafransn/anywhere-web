@@ -25,10 +25,12 @@ export class ViemService {
     this.currentChain = chain;
 
     const privateKey = process.env.PRIVATE_KEY;
+    console.log(privateKey, "privateKey <--");
     if (!privateKey) {
       throw new Error("PRIVATE_KEY is not set");
     } else {
       this.serverAccount = privateKeyToAccount(`0x${privateKey}`);
+      console.log(this.serverAccount, "this.serverAccount <--");
     }
 
     this.publicClient = createPublicClient({

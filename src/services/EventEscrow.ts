@@ -152,7 +152,7 @@ export class EventEscrow extends ViemService {
       const receipt = await this.publicClient.waitForTransactionReceipt({
         hash,
       });
-
+      console.log(receipt, "receipt <---");
       return receipt;
     } catch (error) {
       console.error(`Error creating event: ${error}`);

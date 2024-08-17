@@ -9,7 +9,6 @@ export type MeetupData = {
   name: string;
   description: string;
   location: string;
-  image: File | null;
   imageUrl: string | null;
   startDateTime: string;
   endDateTime: string;
@@ -26,7 +25,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       description,
-      imageUrl,
+      image,
       startDateTime,
       endDateTime,
       creatorUserId,
@@ -37,11 +36,13 @@ export async function POST(request: NextRequest) {
       organizerWalletAddress,
     } = req.meetup as MeetupData;
 
+    console.log(req.meetup, "req.meetup <---");
+
     // Validate required fields
     if (
       !name ||
       !description ||
-      !imageUrl ||
+      !image ||
       !startDateTime ||
       !endDateTime ||
       !creatorUserId ||
@@ -51,6 +52,7 @@ export async function POST(request: NextRequest) {
       !organizerWalletAddress ||
       !location
     ) {
+      console.log("Missing required fields ööööö");
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -64,7 +66,7 @@ export async function POST(request: NextRequest) {
         .values({
           name,
           description,
-          image: imageUrl,
+          image: image,
           organizerWalletAddress,
           createdBy: creatorUserId,
           startDate: new Date(startDateTime),

@@ -17,10 +17,12 @@ export function useGetUserById() {
       }
 
       try {
-        setLoading(true);
-        const _user = await ApiService.getUserById(userId as string);
-        setUser(_user);
-        setError(null);
+        if (userId) {
+          setLoading(true);
+          const _user = await ApiService.getUserById(userId as string);
+          setUser(_user);
+          setError(null);
+        }
       } catch (error) {
         console.error("Error fetching user:", error);
         setError("Failed to fetch user data");
