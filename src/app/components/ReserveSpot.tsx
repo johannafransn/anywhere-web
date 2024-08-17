@@ -20,7 +20,7 @@ export default function ReserveSpot(props: any) {
         meetupId,
         userId: Auth.id,
       });
-      let response = true;
+
       console.log("response", response);
 
       if (response) {
