@@ -17,12 +17,26 @@ type SupportChainType = typeof baseSepolia | typeof base;
 
 export class ViemService {
   protected currentChain: Chain;
-  protected serverClient: WalletClient;
-  protected serverAccount: Account;
+  protected serverClient: WalletClient | undefined;
+  protected serverAccount: Account | undefined;
   public publicClient: PublicClient;
 
-  constructor(chain: SupportChainType = baseSepolia) {
+  constructor({
+    chain = baseSepolia,
+    isClient = false,
+  }: {
+    chain?: SupportChainType;
+    isClient?: boolean;
+  }) {
     this.currentChain = chain;
+
+    if (isClient) {
+      this.publicClient = createPublicClient({
+        chain: this.currentChain,
+        transport: custom(window.ethereum!),
+      });
+      return;
+    }
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {
@@ -31,28 +45,29 @@ export class ViemService {
       this.serverAccount = privateKeyToAccount(`0x${privateKey}`);
     }
 
-    this.publicClient = createPublicClient({
-      chain: this.currentChain,
-      transport: http(),
-    });
-
     this.serverClient = createWalletClient({
       chain: this.currentChain,
       account: this.serverAccount,
       transport: http(),
     });
+
+    this.publicClient = createPublicClient({
+      chain: this.currentChain,
+      transport: http(),
+    });
   }
 
-  public async getWalletClient() {
+  public async getWalletClient(account: Hex) {
     return createWalletClient({
       chain: this.currentChain,
+      account,
       transport: custom(window.ethereum!),
     });
   }
 
   public async getBalanceForServerClient() {
     const balance = await this.publicClient.getBalance({
-      address: this.serverAccount.address,
+      address: this.serverAccount?.address!,
     });
     return balance;
   }

@@ -6,8 +6,14 @@ import { eventEscrowAbi } from "./abi/escrow";
 export class EventEscrow extends ViemService {
   private eventEscrowAddress: Hex;
 
-  constructor(eventEscrowAddress: Hex = EVENT_ESCROW_ADDRESS_BASE_TESTNET) {
-    super();
+  constructor({
+    eventEscrowAddress = EVENT_ESCROW_ADDRESS_BASE_TESTNET,
+    isClient = false,
+  }: {
+    eventEscrowAddress?: Hex;
+    isClient?: boolean;
+  }) {
+    super({ isClient });
     this.eventEscrowAddress = eventEscrowAddress;
   }
 
@@ -40,10 +46,10 @@ export class EventEscrow extends ViemService {
         account: this.serverAccount,
       });
 
-      const hash = await this.serverClient.writeContract(request);
+      const hash = await this.serverClient?.writeContract(request);
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
-        hash,
+        hash: hash!,
       });
 
       return receipt;
@@ -75,10 +81,10 @@ export class EventEscrow extends ViemService {
         account: this.serverAccount,
       });
 
-      const hash = await this.serverClient.writeContract(request);
+      const hash = await this.serverClient?.writeContract(request);
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
-        hash,
+        hash: hash!,
       });
 
       return receipt;
@@ -87,12 +93,14 @@ export class EventEscrow extends ViemService {
     }
   }
 
+  // NOTE: Can only be called client side
   public async depositEscrow(
+    attendee: Hex,
     organizer: Hex,
     eventId: number | string,
     amount: number | string
   ) {
-    const walletClient = await this.getWalletClient();
+    const walletClient = await this.getWalletClient(attendee);
     if (!walletClient || !walletClient.account) {
       throw new Error("Wallet client account is undefined");
     }
@@ -139,12 +147,12 @@ export class EventEscrow extends ViemService {
         account: this.serverAccount,
       });
 
-      const hash = await this.serverClient.writeContract({
+      const hash = await this.serverClient?.writeContract({
         ...request,
       });
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
-        hash,
+        hash: hash!,
       });
 
       return receipt;

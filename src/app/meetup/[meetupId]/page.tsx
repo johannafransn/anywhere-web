@@ -32,6 +32,7 @@ export default function Meetup() {
                 price={meetup.meetup.attendanceFee}
                 isOwner={meetup.creator.id === Auth.id}
                 meetupId={meetup.meetup.id}
+                ownerAddress={meetup.meetup.organizerWalletAddress}
               />
             )}
           </div>

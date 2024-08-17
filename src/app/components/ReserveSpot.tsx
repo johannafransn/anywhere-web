@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ApiService } from "@/utils/api-service"; // Adjust the import path as necessary
 import { Auth } from "@/utils/cookie-auth";
+import { EventEscrow } from "@/services/EventEscrow";
+import { useAccount } from "wagmi";
+import { Hex } from "viem";
 
 export default function ReserveSpot(props: any) {
-  let { meetupId, userId, isGuest, price, isOwner } = props; // Assuming userId is passed as a prop
+  let { meetupId, userId, isGuest, price, isOwner, ownerAddress } = props; // Assuming userId is passed as a prop
   const router = useRouter();
+  const { address: userAddress } = useAccount();
   const [loading, setLoading] = useState(false);
   const [isReserved, setIsReserved] = useState(false);
 
@@ -16,15 +20,30 @@ export default function ReserveSpot(props: any) {
   const reserveSpot = async () => {
     setLoading(true);
     try {
-      const response = await ApiService.createGuest({
-        meetupId,
-        userId: Auth.id,
-      });
+      if (userAddress) {
+        const eventEscrow = new EventEscrow({ isClient: true });
+        const depositResponse = await eventEscrow.depositEscrow(
+          userAddress,
+          ownerAddress as Hex,
+          meetupId as number,
+          price as string
+        );
 
-      if (response) {
-        setIsReserved(true);
-      } else {
-        console.error("Error reserving spot");
+        if (!depositResponse) {
+          console.error("Error depositing escrow");
+          return;
+        }
+
+        const response = await ApiService.createGuest({
+          meetupId,
+          userId: Auth.id,
+        });
+
+        if (response) {
+          setIsReserved(true);
+        } else {
+          console.error("Error reserving spot");
+        }
       }
     } catch (error) {
       console.error("Error reserving spot:", error);
