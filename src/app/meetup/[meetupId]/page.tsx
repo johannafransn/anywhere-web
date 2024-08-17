@@ -7,23 +7,9 @@ import { Auth } from "@/utils/cookie-auth";
 import { useRouter } from "next/navigation";
 import { LuMapPin } from "react-icons/lu";
 
-/* TODO:
-
-This page should have the following data/logic:
-
-Display meetup info: name, time, date, location, 
-Display creator info: Socials, name, bio
-Number of guests that have signed up, and their names + avatar
-If current Auth.id is 'isGuest' or not, based on that render 'reserve spot' or 'cancel' button
-Handle 'reserve spot' logic, create endpoint for where Auth.id is added to the meetup.guests array and db
-
-*/
-
 export default function Meetup() {
   const router = useRouter();
   const { meetup, loading } = useGetMeetupById();
-
-  console.log(meetup, "what smeetup?");
 
   return (
     <div className="flex flex-col w-full md:w-4/5  max-w-xl mx-auto ">

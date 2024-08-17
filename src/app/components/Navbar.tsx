@@ -60,7 +60,7 @@ const Navbar = () => {
           <button onClick={handleSignout}>
             <MdOutlineExitToApp />
           </button>
-          <Link href={`/profile/${Auth.id}`}>
+          <Link href={`/profile/${user ? user.id : Auth.id}`}>
             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
               {user ? (
                 <img

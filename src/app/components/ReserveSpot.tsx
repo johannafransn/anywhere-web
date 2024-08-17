@@ -9,8 +9,9 @@ export default function ReserveSpot(props: any) {
   let { meetupId, userId, isGuest, price, isOwner } = props; // Assuming userId is passed as a prop
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isReserved, setIsReserved] = useState(false);
 
-  useEffect(() => {}, [isGuest]);
+  useEffect(() => {}, [isReserved]);
 
   const reserveSpot = async () => {
     setLoading(true);
@@ -19,12 +20,13 @@ export default function ReserveSpot(props: any) {
         meetupId,
         userId: Auth.id,
       });
+      let response = true;
       console.log("response", response);
 
       if (response) {
         console.log("Spot reserved successfully");
         // Optionally, you can redirect or update the UI here
-        isGuest = true;
+        setIsReserved(true);
       } else {
         console.error("Error reserving spot");
       }
@@ -37,7 +39,7 @@ export default function ReserveSpot(props: any) {
 
   const renderButtonText = () => {
     console.log(isGuest || isOwner, "is guest or owner", isGuest, isOwner);
-    if (isGuest || isOwner) {
+    if (isGuest || isOwner || isReserved) {
       return "You are going!";
     } else if (loading) {
       return "Reserving...";
