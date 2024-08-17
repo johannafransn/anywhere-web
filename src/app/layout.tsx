@@ -23,7 +23,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <head>
+          <title>Anywhere - find your next onchain meetup</title>
+          <meta
+            name="description"
+            content="Crowdsource your next in-person meetup. Get paid to host IRL meetups and let your guests earn by bringing a friend."
+          />
+          <meta
+            property="og:title"
+            content="Anywhere - find your next onchain meetup"
+          />
+          <meta
+            property="og:description"
+            content="Crowdsource your next in-person meetup. Get paid to host IRL meetups and let your guests earn by bringing a friend."
+          />
+          <meta property="og:image" content="/main-bg.png" />
+          <link
+            href="/favicon.ico"
+            rel="shortcut icon"
+            type="image/x-icon"
+          ></link>
+        </head>
       </head>
       <body className="tracking-tight">
         <Web3ModalProvider initialState={initialState}>
