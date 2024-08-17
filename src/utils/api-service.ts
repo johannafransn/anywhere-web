@@ -44,4 +44,9 @@ export const ApiService = {
     const { data } = await axios.post(`/api/meetup-create-get`, meetup);
     return data;
   },
+
+  createGuest: async function (guest: any) {
+    const { data } = await axios.post(`/api/reserve-guest-spot`, guest);
+    return data;
+  },
 };
