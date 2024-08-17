@@ -37,12 +37,10 @@ export class EventEscrow extends ViemService {
         ...tokenContract,
         functionName: "changeAdmin",
         args: [newAdmin],
-      });
-
-      const hash = await this.serverClient.writeContract({
-        ...request,
         account: this.serverAccount,
       });
+
+      const hash = await this.serverClient.writeContract(request);
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
         hash,
@@ -74,12 +72,10 @@ export class EventEscrow extends ViemService {
         ...tokenContract,
         functionName: "releaseEscrow",
         args: [organizer, formattedEventId, attendee],
-      });
-
-      const hash = await this.serverClient.writeContract({
-        ...request,
         account: this.serverAccount,
       });
+
+      const hash = await this.serverClient.writeContract(request);
 
       const receipt = await this.publicClient.waitForTransactionReceipt({
         hash,
