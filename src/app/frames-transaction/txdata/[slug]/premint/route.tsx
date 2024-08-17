@@ -56,7 +56,6 @@ export async function POST(
     tokenDecimal: existingFrame.decimal,
   });
 
-  console.log(premintTx, "MINT TX");
 
   return NextResponse.json({
     chainId: "eip155:8453", // base mainnet

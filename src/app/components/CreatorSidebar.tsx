@@ -6,8 +6,6 @@ export default function CreatorSidebar(props: any) {
   const { meetup } = props;
   const router = useRouter();
 
-  console.log(meetup, "what smeetup?");
-
   return (
     <div className="flex flex-col mr-12 ">
       <img

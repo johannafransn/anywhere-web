@@ -72,7 +72,6 @@ export async function POST(
     }
   );
 
-  console.log(mintTx, "MINT TX");
 
   return NextResponse.json({
     chainId: "eip155:8453", // base mainnet

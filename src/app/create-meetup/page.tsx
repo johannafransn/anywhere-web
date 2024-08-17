@@ -82,8 +82,6 @@ export default function Dashboard() {
         organizerWalletAddress: meetupData.organizerWalletAddress || address,
       };
 
-      console.log(apiMeetupData, "api meetupdata");
-
       await ApiService.createMeetup({ meetup: apiMeetupData });
 
       resetForm();

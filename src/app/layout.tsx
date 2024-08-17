@@ -22,6 +22,9 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie"));
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className="tracking-tight">
         <Web3ModalProvider initialState={initialState}>
           <main className="flex flex-col px-12 py-2">

@@ -2,24 +2,16 @@
 
 import { useGetUserMeetupsByUserId } from "@/hooks/useGetMeetupsByUserId";
 import { formatDate } from "@/utils/helpers";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import SkeletonCard from "../components/SkeletonCard";
 
-export default function Dashboard() {
+export default function Meetups() {
   const router = useRouter();
   const [isPastEvents, setIsPastEvents] = useState(false);
   const { meetups, loading } = useGetUserMeetupsByUserId(isPastEvents);
 
-  const frameUrl = process.env.NEXT_PUBLIC_SERVER_URL + "frames-transaction/";
-
-  const handleCopyClick = (text: string) => {
-    // ... existing code ...
-  };
-
-  console.log(meetups, "meetups");
   return (
     <div className="flex flex-col w-full md:w-3/5 mt-12 mx-auto">
       <div className="flex flex-col text-center justify-center text-lg">

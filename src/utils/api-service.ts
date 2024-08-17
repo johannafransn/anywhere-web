@@ -13,16 +13,13 @@ export const ApiService = {
   },
 
   getMeetupById: async function (meetupId: string) {
-    console.log(`/meetup-get-by-id/${meetupId}?userId=${Auth.id}`, "url");
     const { data } = await axios.get(
       `/api/meetup-get-by-id/${meetupId}?userId=${Auth.id}`
     );
-    console.log(data, "DATA ÖÖÖÖ");
     return data;
   },
 
   getUserByWalletAddress: async function (walletAddress: string) {
-    console.log(`/api/user/wallet/${walletAddress}`, "url heej");
     const { data } = await axios.get(`/api/user/wallet/${walletAddress}`);
     return data;
   },

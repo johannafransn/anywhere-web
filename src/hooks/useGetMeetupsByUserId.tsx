@@ -11,7 +11,6 @@ export function useGetUserMeetupsByUserId(isPastEvents: boolean) {
       try {
         setLoading(true);
         const userId = Auth.id;
-        console.log(userId, "userId", isPastEvents);
         const _meetups = await ApiService.getMeetupsByUserId(
           userId,
           isPastEvents

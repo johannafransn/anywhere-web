@@ -2,7 +2,6 @@ import { FaLink } from "react-icons/fa";
 import { City } from "../discover/page";
 
 const CityCard = ({ city }: { city: City }) => {
-  console.log(city.image, "img sit");
   return (
     <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
       <div className={` bg-${city.color}`} />

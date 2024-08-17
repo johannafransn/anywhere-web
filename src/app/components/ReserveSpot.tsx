@@ -21,11 +21,7 @@ export default function ReserveSpot(props: any) {
         userId: Auth.id,
       });
 
-      console.log("response", response);
-
       if (response) {
-        console.log("Spot reserved successfully");
-        // Optionally, you can redirect or update the UI here
         setIsReserved(true);
       } else {
         console.error("Error reserving spot");
@@ -38,7 +34,6 @@ export default function ReserveSpot(props: any) {
   };
 
   const renderButtonText = () => {
-    console.log(isGuest || isOwner, "is guest or owner", isGuest, isOwner);
     if (isGuest || isOwner || isReserved) {
       return "You are going!";
     } else if (loading) {
