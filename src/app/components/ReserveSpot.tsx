@@ -7,6 +7,7 @@ import { Auth } from "@/utils/cookie-auth";
 import { EventEscrow } from "@/services/EventEscrow";
 import { useAccount } from "wagmi";
 import { Hex } from "viem";
+import WithdrawFundsButton from "./WithdrawFundsButton";
 
 export default function ReserveSpot(props: any) {
   let { meetupId, userId, isGuest, price, isOwner, ownerAddress } = props; // Assuming userId is passed as a prop
@@ -21,8 +22,8 @@ export default function ReserveSpot(props: any) {
     setLoading(true);
     try {
       if (userAddress) {
-        const eventEscrow = new EventEscrow({ isClient: true });
-        const depositResponse = await eventEscrow.depositEscrow(
+        const eventEscrowContract = new EventEscrow({ isClient: true });
+        const depositResponse = await eventEscrowContract.depositEscrow(
           userAddress,
           ownerAddress as Hex,
           meetupId as number,
@@ -80,6 +81,7 @@ export default function ReserveSpot(props: any) {
       >
         {renderButtonText()}
       </button>
+      <WithdrawFundsButton organizerAddress={ownerAddress} eventId={meetupId} />
     </div>
   );
 }

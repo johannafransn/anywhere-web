@@ -106,8 +106,8 @@ export async function POST(request: NextRequest) {
       return newMeetup;
     });
 
-    const eventEscrow = new EventEscrow();
-    const txReceipt = await eventEscrow.createEvent(
+    const eventEscrowContract = new EventEscrow({});
+    const txReceipt = await eventEscrowContract.createEvent(
       organizerWalletAddress as Hex,
       result.id,
       attendanceFee as string | number

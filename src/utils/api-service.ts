@@ -46,4 +46,16 @@ export const ApiService = {
     const { data } = await axios.post(`/api/reserve-guest-spot`, guest);
     return data;
   },
+  withdrawUserEscrowedFunds: async function (
+    organizerAddress: string,
+    eventId: number,
+    userAddress: string
+  ) {
+    const { data } = await axios.post(`/api/withdraw-user-escrowed-funds`, {
+      organizerAddress,
+      eventId,
+      userAddress,
+    });
+    return data;
+  },
 };
