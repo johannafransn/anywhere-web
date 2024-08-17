@@ -9,6 +9,7 @@ export type MeetupData = {
   name: string;
   description: string;
   location: string;
+  image: File | null;
   imageUrl: string | null;
   startDateTime: string;
   endDateTime: string;
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       description,
-      image,
+      imageUrl,
       startDateTime,
       endDateTime,
       creatorUserId,
@@ -38,23 +39,41 @@ export async function POST(request: NextRequest) {
 
     console.log(req.meetup, "req.meetup <---");
 
-    // Validate required fields
-    if (
-      !name ||
-      !description ||
-      !image ||
-      !startDateTime ||
-      !endDateTime ||
-      !creatorUserId ||
-      !attendanceFee ||
-      !capacity ||
-      !visibility ||
-      !organizerWalletAddress ||
-      !location
-    ) {
-      console.log("Missing required fields ööööö");
+    // Check if imageUrl is null or undefined
+    if (!imageUrl) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Image URL is required" },
+        { status: 400 }
+      );
+    }
+
+    // Create an object to track missing fields
+    const missingFields: Record<string, boolean> = {
+      name: !name,
+      description: !description,
+      imageUrl: !imageUrl,
+      startDateTime: !startDateTime,
+      endDateTime: !endDateTime,
+      creatorUserId: !creatorUserId,
+      attendanceFee: !attendanceFee,
+      capacity: !capacity,
+      visibility: !visibility,
+      organizerWalletAddress: !organizerWalletAddress,
+      location: !location,
+    };
+
+    // Check if any fields are missing
+    const missingFieldNames = Object.keys(missingFields).filter(
+      (field) => missingFields[field]
+    );
+
+    if (missingFieldNames.length > 0) {
+      console.log("Missing required fields:", missingFieldNames);
+      return NextResponse.json(
+        {
+          error: "Missing required fields",
+          missingFields: missingFieldNames,
+        },
         { status: 400 }
       );
     }
@@ -66,7 +85,7 @@ export async function POST(request: NextRequest) {
         .values({
           name,
           description,
-          image: image,
+          image: imageUrl,
           organizerWalletAddress,
           createdBy: creatorUserId,
           startDate: new Date(startDateTime),

@@ -28,11 +28,12 @@ export default function Dashboard() {
   const router = useRouter();
   const { address } = useAccount();
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
+  // const [image, setImage] = useState<File | null>(null);
   const [meetupData, setMeetupData] = useState<MeetupData>({
     name: "",
     description: "",
     location: "",
+    image: null,
     imageUrl: null,
     startDateTime: "",
     endDateTime: "",
@@ -61,8 +62,8 @@ export default function Dashboard() {
     setLoading(true);
 
     try {
-      if (!image) throw new Error("Image is required");
-      const imageUrl = await uploadImageToImgBB(image);
+      if (!meetupData.image) throw new Error("Image is required");
+      const imageUrl = await uploadImageToImgBB(meetupData.image);
 
       if (!meetupData.organizerWalletAddress || !address)
         throw new Error("Connected Wallet is required");
@@ -71,7 +72,7 @@ export default function Dashboard() {
         name: meetupData.name,
         description: meetupData.description,
         location: meetupData.location,
-        image: imageUrl,
+        imageUrl: imageUrl,
         creatorUserId: Auth.id,
         attendanceFee: meetupData.attendanceFee,
         startDateTime: new Date(meetupData.startDateTime).toISOString(),
@@ -97,11 +98,11 @@ export default function Dashboard() {
   };
 
   const resetForm = () => {
-    setImage(null);
     setMeetupData({
       name: "",
       description: "",
       location: "",
+      image: null,
       imageUrl: null,
       startDateTime: "",
       endDateTime: "",
@@ -114,8 +115,8 @@ export default function Dashboard() {
   };
 
   const handleImageClick = () => {
-    if (image) {
-      setImage(null);
+    if (meetupData.image) {
+      setMeetupData((prev) => ({ ...prev, image: null, imageUrl: null }));
     } else {
       document.getElementById("imageInput")?.click();
     }
@@ -124,7 +125,11 @@ export default function Dashboard() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
-      setImage(file);
+      setMeetupData((prev) => ({
+        ...prev,
+        image: file,
+        imageUrl: URL.createObjectURL(file),
+      }));
     }
   };
 
@@ -244,9 +249,7 @@ export default function Dashboard() {
               onClick={handleImageClick}
             >
               <Image
-                src={
-                  image ? URL.createObjectURL(image) : "/create-meetup-ph.png"
-                }
+                src={meetupData.imageUrl || "/create-meetup-ph.png"}
                 alt="Upload"
                 width={150}
                 height={150}
@@ -254,7 +257,7 @@ export default function Dashboard() {
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-50 transition-opacity duration-300 rounded-lg">
                 <span className="text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  {image ? "Delete" : "Upload"}
+                  {meetupData.image ? "Delete" : "Upload"}
                 </span>
               </div>
             </div>
