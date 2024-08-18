@@ -4,6 +4,7 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import useGetUserById from "@/hooks/useGetUserById";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { UpcomingEvents } from "./components/UpcomingEvents";
 
 export default function Home() {
   const router = useRouter();
@@ -11,7 +12,7 @@ export default function Home() {
   const { user } = useGetUserById();
 
   return (
-    <div className="relative flex flex-col w-full">
+    <div className="relative flex flex-col w-full space-y-8">
       <div className="flex">
         <h4 className=" font-normal text-8xl mr-2 w-4/5">
           Crowdsource your next in-person meetup
@@ -30,6 +31,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <UpcomingEvents />
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function WithdrawFundsButton({
       <button
         onClick={handleWithdraw}
         disabled={isLoading || !address}
-        className="py-2 px-5 bg-black-opacity-80 text-white font-light rounded-xl hover:bg-black-opacity-70 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
+        className="py-2 w-full bg-black mb-1 text-white font-light rounded-lg hover:bg-black-opacity-80 hover:scale-105 transition ease-in-out disabled:bg-black-opacity-30"
       >
         {isLoading ? "Withdrawing..." : "Withdraw Funds"}
       </button>

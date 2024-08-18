@@ -64,24 +64,31 @@ export default function ReserveSpot(props: any) {
   };
 
   return (
-    <div className="flex flex-col border border-gray-400 rounded-lg p-2 bg-gray-200">
-      <div className="bg-white text-[15px] border-gray-4000 rounded-lg p-1 mb-2 ">
+    <div className="flex flex-col space-y-3 border border-gray-200 rounded-lg p-1 bg-gray-100">
+      <div className="bg-white text-black-opacity-50 text-sm rounded-t-lg p-2">
         Get Tickets
       </div>
-      <div className="flex flex-row justify-between mb-2">
-        <p className="mb-1 ">1 person</p>
+      <div className="flex flex-row justify-between text-sm px-1 text-black-opacity-50">
+        <p className="mb-1 ">1 Person</p>
         <p>{price} ETH</p>
       </div>
-      <button
-        disabled={isOwner || loading}
-        className={`bg-gray-500 w-full rounded-lg border border-gray-4000 p-4 text-white ${
-          loading ? "cursor-not-allowed" : "cursor-pointer"
-        }`}
-        onClick={loading ? undefined : reserveSpot}
-      >
-        {renderButtonText()}
-      </button>
-      <WithdrawFundsButton organizerAddress={ownerAddress} eventId={meetupId} />
+      {/* Buttonz */}
+      <hr />
+      <div className="space-y-3 px-1">
+        <button
+          disabled={isOwner || loading}
+          className={`bg-black-opacity-80 w-full rounded-lg border border-gray-4000 p-2 text-white ${
+            loading ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
+          onClick={loading ? undefined : reserveSpot}
+        >
+          {renderButtonText()}
+        </button>
+        <WithdrawFundsButton
+          organizerAddress={ownerAddress}
+          eventId={meetupId}
+        />
+      </div>
     </div>
   );
 }

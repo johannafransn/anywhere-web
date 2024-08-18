@@ -14,7 +14,6 @@ export type City = {
   name: string;
   meetupsHosted: number;
   region: string;
-  color: string;
 };
 
 export default function Dashboard() {
@@ -28,28 +27,24 @@ export default function Dashboard() {
       name: "Madrid",
       meetupsHosted: 5,
       region: "Europe",
-      color: "pink-600",
     },
     {
       image: "https://i.ibb.co/C6ftX09/chiang-mai.jpg",
       name: "Chiang Mai",
       meetupsHosted: 6,
       region: "Asia",
-      color: "green-600",
     },
     {
       image: "https://i.ibb.co/hWcNTVW/new-york.jpg",
       name: "New York",
       meetupsHosted: 18,
       region: "North America",
-      color: "orange-600",
     },
     {
       image: "https://i.ibb.co/7Jxt7dm/Rectangle-3.png",
       name: "Mexico City",
       meetupsHosted: 2,
       region: "South America",
-      color: "red-600",
     },
   ];
 
@@ -133,26 +128,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
-
-{
-  /*    <div
-              className="grid grid-rows-3 gap-2 text-black mt-3"
-              key={meetup.id}
-            >
-              <div className="relative">
-                <img
-                  src={meetup.image}
-                  alt={meetup.name}
-                  className=" object-cover rounded-lg w-[70px] h-[70px]"
-                />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="text-xl font-semibold">{meetup.name}</h3>
-                <p className="text-sm">{meetup.description}</p>
-                <p className="text-sm">
-                  Date: {new Date(meetup.date).toLocaleDateString()}
-                </p>
-              </div>
-            </div> */
 }

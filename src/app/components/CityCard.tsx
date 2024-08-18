@@ -3,12 +3,11 @@ import { City } from "../discover/page";
 
 const CityCard = ({ city }: { city: City }) => {
   return (
-    <div className="h-auto w-full flex gap-4 rounded-lg text-black-opacity-80">
-      <div className={` bg-${city.color}`} />
+    <div className="flex gap-4 rounded-lg text-black-opacity-80">
       <img
         src={city.image}
         alt="cityimg"
-        className="h-20 w-20 rounded-lg shadow-sm  object-cover shadow-xl dark:shadow-gray-800"
+        className="h-20 w-20 rounded-lg shadow-sm object-cover dark:shadow-gray-800"
       />
       <div className="flex flex-col justify-between py-1 text-left text-sm">
         <div className="flex gap-4 items-center justify-between">

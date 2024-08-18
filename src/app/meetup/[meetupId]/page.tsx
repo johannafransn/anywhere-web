@@ -12,20 +12,30 @@ export default function Meetup() {
   const { meetup, loading } = useGetMeetupById();
 
   return (
-    <div className="flex flex-col w-full md:w-4/5  max-w-xl mx-auto ">
-      <div className="flex flex-col  text-lg">
-        <div className="flex flex-row">
+    <div className="flex flex-col w-3/5 mx-auto">
+      <div className="flex flex-col text-md">
+        <div className="flex space-x-5">
+          {/* Creator details, attendees and event picture */}
           {meetup && <CreatorSidebar meetup={meetup} />}
-          <div className="flex flex-col">
-            {meetup && <p className="text-[40px]">{meetup.meetup.name}</p>}
-            <div className="mt-4">
+
+          {/* Event details */}
+          <div className="flex flex-col space-y-6 w-2/5">
+            {meetup && (
+              <p className="text-4xl text-black-opacity-80">
+                {meetup.meetup.name}
+              </p>
+            )}
+            <div>
               <p>{meetup?.meetup.date}</p>
-              <div className="flex flex-row mt-4 mb-4">
-                {" "}
-                <LuMapPin />{" "}
-                <p className="-mt-1  ml-2">{meetup?.meetup.location}</p>
+              <div className="flex items-center">
+                <div className="border border-black-opacity-60 rounded-md p-2">
+                  <LuMapPin />
+                </div>{" "}
+                <p className="-mt-1 ml-2">{meetup?.meetup.location}</p>
               </div>
             </div>
+
+            {/* Place to reserve */}
             {meetup && (
               <ReserveSpot
                 isGuest={meetup.isGuest}
@@ -35,6 +45,25 @@ export default function Meetup() {
                 ownerAddress={meetup.meetup.organizerWalletAddress}
               />
             )}
+
+            {/* More about the event */}
+            <div className="flex flex-col space-y-2">
+              <h4 className="text-black-opacity-40">About the event</h4>
+              <hr />
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </div>
           </div>
         </div>
       </div>
