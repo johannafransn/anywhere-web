@@ -84,10 +84,10 @@ export default function ReserveSpot(props: any) {
         >
           {renderButtonText()}
         </button>
-        <WithdrawFundsButton
+        {/*   <WithdrawFundsButton
           organizerAddress={ownerAddress}
           eventId={meetupId}
-        />
+        /> */}
       </div>
     </div>
   );

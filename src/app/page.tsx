@@ -5,6 +5,7 @@ import useGetUserById from "@/hooks/useGetUserById";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UpcomingEvents } from "./components/UpcomingEvents";
+import { cities } from "./discover/page";
 
 export default function Home() {
   const router = useRouter();
@@ -31,7 +32,27 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
       <UpcomingEvents />
+      <br></br>
+      <br></br>
+      <div className="flex flex-row gap-4 justify-between mt-12 mb-12">
+        {cities.map((city) => (
+          <div
+            key={city.name}
+            className="relative w-[270px] h-[160px] rounded-lg overflow-hidden"
+          >
+            <img
+              src={city.image}
+              alt={`${city.name}, ${city.region}`}
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <span className="bg-gray-100 text-black-opacity-70 top-[10px] left-[10px] absolute px-2 py-1 rounded-lg">
+              {city.name}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

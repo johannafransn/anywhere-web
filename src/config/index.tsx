@@ -11,6 +11,12 @@ export const metadata = {
   description: "Meet Anywhere",
   url: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000", // origin must match your domain & subdomain
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
+  auth: {
+    email: true, // default to true
+    socials: ["x", "github", "farcaster"],
+    showWallets: true, // default to true
+    walletFeatures: true, // default to true
+  },
 };
 
 const chains = [base, baseSepolia] as const;
