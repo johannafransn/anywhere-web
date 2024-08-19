@@ -5,7 +5,7 @@ import useGetUserById from "@/hooks/useGetUserById";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { UpcomingEvents } from "./components/UpcomingEvents";
-import { cities } from "./discover/page";
+import { cities } from "@/utils/constants";
 
 export default function Home() {
   const router = useRouter();

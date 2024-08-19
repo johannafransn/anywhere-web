@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import CityCard from "../components/CityCard";
 import { formatDate } from "@/utils/helpers";
 import SkeletonCard from "../components/SkeletonCard";
+import { cities } from "@/utils/constants";
 
 export type City = {
   image: string;
@@ -15,33 +16,6 @@ export type City = {
   meetupsHosted: number;
   region: string;
 };
-
-export const cities = [
-  {
-    image: "https://i.ibb.co/JxR4MQ9/madrid.jpg",
-    name: "Madrid",
-    meetupsHosted: 5,
-    region: "Europe",
-  },
-  {
-    image: "https://i.ibb.co/C6ftX09/chiang-mai.jpg",
-    name: "Chiang Mai",
-    meetupsHosted: 6,
-    region: "Asia",
-  },
-  {
-    image: "https://i.ibb.co/hWcNTVW/new-york.jpg",
-    name: "New York",
-    meetupsHosted: 18,
-    region: "North America",
-  },
-  {
-    image: "https://i.ibb.co/7Jxt7dm/Rectangle-3.png",
-    name: "Mexico City",
-    meetupsHosted: 2,
-    region: "South America",
-  },
-];
 
 export default function Dashboard() {
   const router = useRouter();
@@ -120,7 +94,7 @@ export default function Dashboard() {
 
         <div className="flex flex-col space-y-4 p-2">
           <div className="grid grid-cols-2 gap-8">
-            {cities.map((city, index) => (
+            {cities.map((city: any, index: number) => (
               <CityCard key={index} city={city} />
             ))}
           </div>
